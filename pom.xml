@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.colin.httpquery</groupId>
+	<groupId>net.gcolin.httpquery</groupId>
 	<artifactId>httpquery</artifactId>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
@@ -26,27 +26,27 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.colin.httpquery</groupId>
+				<groupId>net.gcolin.httpquery</groupId>
 				<artifactId>httpquery-facade</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.colin.httpquery</groupId>
+				<groupId>net.gcolin.httpquery</groupId>
 				<artifactId>httpquery-httpclient</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.colin.httpquery</groupId>
+				<groupId>net.gcolin.httpquery</groupId>
 				<artifactId>httpquery-xstream</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.colin.httpquery</groupId>
+				<groupId>net.gcolin.httpquery</groupId>
 				<artifactId>httpquery-mock</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.colin.httpquery</groupId>
+				<groupId>net.gcolin.httpquery</groupId>
 				<artifactId>httpquery-jackson</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -122,6 +122,17 @@
 	                </execution>
 	            </executions>
 	        </plugin>
+	        
 		</plugins>
+		
+  <pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>2.0</version>
+      </plugin>
+    </plugins>
+  </pluginManagement>
 	</build>
 </project>
