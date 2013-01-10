@@ -1,0 +1,5 @@
+org.httpclientquery.spi.ObjectSerializer
+org.httpclientquery.spi.SourceSerializer
+org.httpclientquery.spi.XMLObjectSerializer
+org.httpclientquery.jaxb.JAXBSerializer
+org.httpclientquery.jaxb.JAXBPrettySerializer
