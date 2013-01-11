@@ -13,6 +13,7 @@
 		<module>httpquery-xstream</module>
 		<module>httpquery-mock</module>
 		<module>httpquery-jackson</module>
+		<module>httpquery-examples</module>
 	</modules>
 	
 	<properties>
@@ -21,6 +22,7 @@
 		<httpclient.version>4.2.1</httpclient.version>
 		<xstream.version>1.4.3</xstream.version>
 		<commonio.version>2.4</commonio.version>
+		<tomcat.version>7.0.25</tomcat.version>
 	</properties>
 
 	<dependencyManagement>
@@ -48,6 +50,11 @@
 			<dependency>
 				<groupId>net.gcolin.httpquery</groupId>
 				<artifactId>httpquery-jackson</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.gcolin.httpquery</groupId>
+				<artifactId>httpquery-examples</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -80,6 +87,21 @@
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
 				<version>${commonio.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tomcat</groupId>
+				<artifactId>tomcat-catalina</artifactId>
+				<version>${tomcat.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tomcat.embed</groupId>
+				<artifactId>tomcat-embed-core</artifactId>
+				<version>${tomcat.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tomcat</groupId>
+				<artifactId>tomcat-jasper</artifactId>
+				<version>${tomcat.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

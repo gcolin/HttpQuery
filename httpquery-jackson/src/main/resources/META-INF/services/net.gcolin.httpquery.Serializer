@@ -1,1 +1,1 @@
-org.httpclientquery.jackson.JacksonSerializer
+net.gcolin.httpquery.jackson.JacksonSerializer

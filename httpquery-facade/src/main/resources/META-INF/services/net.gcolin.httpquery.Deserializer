@@ -1,7 +1,7 @@
-org.httpclientquery.spi.ObjectDeserializer
-org.httpclientquery.spi.DOMSourceDeserializer
-org.httpclientquery.spi.SAXSourceDeserializer
-org.httpclientquery.spi.StAXSourceDeserializer
-org.httpclientquery.spi.StreamSourceDeserializer
-org.httpclientquery.spi.XMLObjectDeserializer
-org.httpclientquery.jaxb.JAXBDeserializer
+net.gcolin.httpquery.spi.ObjectDeserializer
+net.gcolin.httpquery.spi.DOMSourceDeserializer
+net.gcolin.httpquery.spi.SAXSourceDeserializer
+net.gcolin.httpquery.spi.StAXSourceDeserializer
+net.gcolin.httpquery.spi.StreamSourceDeserializer
+net.gcolin.httpquery.spi.XMLObjectDeserializer
+net.gcolin.httpquery.jaxb.JAXBDeserializer

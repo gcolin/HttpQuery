@@ -39,7 +39,7 @@ public final class Http {
 	
 	public static void initHandler() {
 		try {
-			Class<?> c=Http.class.getClassLoader().loadClass("org.httpclientquery.HttpHandlerImpl");
+			Class<?> c=Http.class.getClassLoader().loadClass("net.gcolin.httpquery.HttpHandlerImpl");
 			handler = (HttpHandler) c.newInstance();
 		} catch (Exception e) {
 			LoggerFactory.getLogger(Http.class).error("cannot find an implementation of HttpHandler");

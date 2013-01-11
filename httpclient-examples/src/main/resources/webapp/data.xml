@@ -1,0 +1,9 @@
+<data>
+	<app name="app1">
+		<status>running</status>
+	</app>
+	
+	<app name="app2">
+		<status>stopped</status>
+	</app>
+</data>

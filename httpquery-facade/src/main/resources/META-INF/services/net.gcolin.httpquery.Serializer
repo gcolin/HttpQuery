@@ -1,5 +1,5 @@
-org.httpclientquery.spi.ObjectSerializer
-org.httpclientquery.spi.SourceSerializer
-org.httpclientquery.spi.XMLObjectSerializer
-org.httpclientquery.jaxb.JAXBSerializer
-org.httpclientquery.jaxb.JAXBPrettySerializer
+net.gcolin.httpquery.spi.ObjectSerializer
+net.gcolin.httpquery.spi.SourceSerializer
+net.gcolin.httpquery.spi.XMLObjectSerializer
+net.gcolin.httpquery.jaxb.JAXBSerializer
+net.gcolin.httpquery.jaxb.JAXBPrettySerializer
