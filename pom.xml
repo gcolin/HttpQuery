@@ -9,6 +9,12 @@
 	<url>http://gcolin.net/httpquery</url>
 	<description>httpquery parent project</description>
 	
+	<scm>
+	    <connection>scm:git:git@github.com:gcolin/HttpQuery.git</connection>
+	    <developerConnection>scm:git:git@github.com:gcolin/HttpQuery.git</developerConnection>
+	    <url>git@github.com:gcolin/HttpQuery.git</url>
+	  </scm>
+	
 	<licenses>
 	    <license>
 	      <name>The Apache Software License, Version 2.0</name>
