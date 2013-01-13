@@ -1,12 +1,19 @@
 package net.gcolin.httpquery.examples.util;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
  @XmlAccessorType(XmlAccessType.FIELD)
- public class App{
+ public class App implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@XmlAttribute
 	private String name;
 	

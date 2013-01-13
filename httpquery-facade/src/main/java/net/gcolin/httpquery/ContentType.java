@@ -28,8 +28,20 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * An annotation for indicating the accepted content type for Serializer.
+ * 
+ * @since  2011
+ * @author Gael
+ *
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface ContentType {
+	/**
+	 * the content type accepted by the Serializer.
+	 * 
+	 * @return a content type
+	 */
 	String value();
 }

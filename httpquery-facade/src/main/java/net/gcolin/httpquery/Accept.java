@@ -30,8 +30,21 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * An annotation for indicating the accepted content type for Deserializer.
+ * 
+ * @since  2011
+ * @author Gael
+ *
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Accept {
+	
+	/**
+	 * the content type accepted by the Deserializer.
+	 * 
+	 * @return a content type
+	 */
 	String value();
 }

@@ -27,16 +27,31 @@ import java.io.InputStream;
 
 import org.slf4j.LoggerFactory;
 
+/**
+ * facade for using httpQuery.
+ * 
+ * @author Gael
+ *
+ */
 public final class Http {
 
+	/**
+	 * the handler is the implementation of this class.
+	 */
 	private static HttpHandler handler;
 	
 	static{
 		initHandler();
 	}
 	
+	/**
+	 * this facade cannot be instantiate.
+	 */
 	private Http(){}
 	
+	/**
+	 * look for the implementation of the handler.
+	 */
 	public static void initHandler() {
 		try {
 			Class<?> c=Http.class.getClassLoader().loadClass("net.gcolin.httpquery.HttpHandlerImpl");
@@ -46,58 +61,149 @@ public final class Http {
 		}
 	}
 	
+	/**
+	 * set manually the handler. for mocking for example.
+	 * 
+	 * @param handler : implementation of the handler
+	 */
 	public static void setHandler(HttpHandler handler) {
 		Http.handler = handler;
 	}
 
+	/**
+	 * build a get request.
+	 * 
+	 * @param uri : the URL
+	 * @return a request
+	 */
 	public static Request get(String uri){
 		return handler.get(uri);
 	}
 	
+	/**
+	 * build a delete request.
+	 * 
+	 * @param uri : the URL
+	 * @return a request
+	 */
 	public static Request delete(String uri){
 		return handler.delete(uri);
 	}
 	
+	/**
+	 * build a put request.
+	 * 
+	 * @param uri : the URL
+	 * @param obj : the data in payload
+	 * @return a request
+	 */
 	public static RequestWithPayload put(String uri,Object obj){
 		return handler.put(uri, obj);
 	}
 	
+	/**
+	 * build a put request.
+	 * 
+	 * @param uri : the URL
+	 * @param data : the data in payload
+	 * @return a request
+	 */
 	public static Request put(String uri,byte[] data){
 		return handler.put(uri, data);
 	}
 		
+	/**
+	 * build a put request.
+	 * 
+	 * @param uri : the URL
+	 * @param str : the data in payload
+	 * @return a request
+	 */
 	public static Request put(String uri,String str){
 		return handler.put(uri, str);
 	}
 	
+	/**
+	 * build a put request.
+	 * 
+	 * @param uri : the URL
+	 * @param inStream : the data in payload
+	 * @return a request
+	 */
 	public static Request put(String uri,InputStream inStream){
 		return handler.put(uri,inStream);
 	}
 	
+	/**
+	 * build a post request.
+	 * 
+	 * @param uri : the URL
+	 * @param obj : the data in payload
+	 * @return a request
+	 */
 	public static RequestWithPayload post(String uri,Object obj){
 		return handler.post(uri, obj);
 	}
 	
+	/**
+	 * build a post request.
+	 * 
+	 * @param uri : the URL
+	 * @param data : the data in payload
+	 * @return a request
+	 */
 	public static Request post(String uri,byte[] data){
 		return handler.post(uri,data);
 	}
 	
+	/**
+	 * build a post request.
+	 * 
+	 * @param uri : the URL
+	 * @param inStream : the data in payload
+	 * @return a request
+	 */
 	public static Request post(String uri,InputStream inStream){
 		return handler.post(uri, inStream);
 	}
 		
+	/**
+	 * build a post request.
+	 * 
+	 * @param uri : the URL
+	 * @param str : the data in payload
+	 * @return a request
+	 */
 	public static Request post(String uri,String str){
 		return handler.post(uri,str);
 	}
 	
+	/**
+	 * build a trace request.
+	 * 
+	 * @param uri : the URL
+	 * @return a request
+	 */
 	public static Request trace(String uri){
 		return handler.trace(uri);
 	}
 	
+	/**
+	 * build a head request.
+	 * 
+	 * @param uri : the URL
+	 * @return a request
+	 */
 	public static Request head(String uri){
 		return handler.head(uri);
 	}
 	
+	/**
+	 * build a options request.
+	 * 
+	 * @param uri : the URL
+	 * @return a request
+	 */
 	public static Request options(String uri){
 		return handler.options(uri);
 	}

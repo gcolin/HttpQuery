@@ -1,23 +1,30 @@
 package net.gcolin.httpquery.examples;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.gcolin.httpquery.Http;
 import net.gcolin.httpquery.examples.util.App;
 import net.gcolin.httpquery.examples.util.Data;
 import net.gcolin.httpquery.examples.util.TomcatServer;
 import net.gcolin.httpquery.xstream.XStreamDeserializer;
 
-public class SimpleXStream {
+public final class SimpleXStream {
 
+	private SimpleXStream(){}
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		Logger log = LoggerFactory.getLogger(SimpleXStream.class);
+		
 		TomcatServer.start();
 		
 		Data data = Http.get("http://localhost:8880/data.xml").deserializeWith(XStreamDeserializer.class).as(Data.class);
 		
 		for(App app:data.getApp()){
-			System.out.println(app.getName()+" : "+app.getStatus());
+			log.info(app.getName()+" : "+app.getStatus());
 		}
 		
 		TomcatServer.stop();

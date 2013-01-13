@@ -74,7 +74,7 @@ public class RequestImpl extends AbstractElement implements Request {
 	}
 
 	public <T> T as(Class<T> target) {
-		return callback(HttpClientDeserializers.OBJECT(target, deserializer));
+		return callback(HttpClientDeserializers.object(target, deserializer));
 	}
 
 	public String asString() {
@@ -90,7 +90,7 @@ public class RequestImpl extends AbstractElement implements Request {
 	}
 
 	public Response asResponse() {
-		return callback(HttpClientDeserializers.RESPONSE(deserializer));
+		return callback(HttpClientDeserializers.reponse(deserializer));
 	}
 
 	public RequestImpl setContentType(String s) {

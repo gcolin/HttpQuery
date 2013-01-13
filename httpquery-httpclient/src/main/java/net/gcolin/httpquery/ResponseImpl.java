@@ -44,7 +44,7 @@ public class ResponseImpl extends AbstractElement implements Response{
 	}
 	
 	public <T> T as(Class<T> target) {
-		return callback(HttpClientDeserializers.OBJECT(target, deserializer));
+		return callback(HttpClientDeserializers.object(target, deserializer));
 	}
 
 	public String asString() {
@@ -86,27 +86,7 @@ public class ResponseImpl extends AbstractElement implements Response{
 	public Collection<Entry<String, String>> headers() {
 		Collection<Entry<String, String>> list=new ArrayList<Entry<String, String>>();
 		for(final Header h:response.getAllHeaders()){
-			list.add(new Entry<String, String>() {
-				
-				private String v=h.getValue();
-				
-				@Override
-				public String setValue(String value) {
-					String old = v;
-					v=value;
-					return old;
-				}
-				
-				@Override
-				public String getValue() {
-					return h.getValue();
-				}
-				
-				@Override
-				public String getKey() {
-					return h.getName();
-				}
-			});
+			list.add(new HeaderEntry(h));
 		}
 		return list;
 	}
@@ -114,6 +94,35 @@ public class ResponseImpl extends AbstractElement implements Response{
 	@Override
 	public int status() {
 		return response.getStatusLine().getStatusCode();
+	}
+	
+	private static final class HeaderEntry implements Entry<String, String>{
+		
+		private final Header header;
+		private String v;
+		
+		public HeaderEntry(Header h){
+			this.header = h;
+			v=h.getValue();
+		}
+		
+		@Override
+		public String setValue(String value) {
+			String old = v;
+			v=value;
+			return old;
+		}
+		
+		@Override
+		public String getValue() {
+			return header.getValue();
+		}
+		
+		@Override
+		public String getKey() {
+			return header.getName();
+		}
+		
 	}
 
 }

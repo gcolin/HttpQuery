@@ -27,7 +27,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Item<U,O> implements Serializable{
 
-	private static final int _43 = 43;
+	private static final int PRIM = 43;
 	private U u;
 	private O o;
 	
@@ -51,7 +51,7 @@ public class Item<U,O> implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return (o.hashCode()+_43)*_43+u.hashCode();
+		return (o.hashCode()+PRIM)*PRIM+u.hashCode();
 	}
 	
 	@Override

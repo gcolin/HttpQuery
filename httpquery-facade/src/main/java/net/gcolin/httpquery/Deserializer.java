@@ -25,7 +25,20 @@ package net.gcolin.httpquery;
 
 import java.io.InputStream;
 
+/**
+ * the interface of a Deserializer.
+ * 
+ * @author Gael
+ *
+ */
 public interface Deserializer {
 
+	/**
+	 * transform the request inputStream into object
+	 * 
+	 * @param inStream : the request inputStream
+	 * @param target : the type of object
+	 * @return the object
+	 */
 	<T> T toObject(InputStream inStream,Class<T> target);
 }

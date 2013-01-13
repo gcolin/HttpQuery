@@ -79,37 +79,12 @@ public final class HttpClientDeserializers {
 		}
 	};
 
-	public static final <T> HttpClientDeserializer<T> OBJECT(final Class<T> target,
+	public static <T> HttpClientDeserializer<T> object(final Class<T> target,
 			final Deserializer deserializer) {
-		return new HttpClientDeserializer<T>() {
-
-			public T call(HttpEntity entity, HttpResponse response)
-					throws IOException {
-				Deserializer d = deserializer;
-				if (entity != null) {
-					if (d == null) {
-						d = IO.deserializer(
-								response.getLastHeader("Content-Type")
-										.getValue(), target);
-					}
-					if (d != null) {
-						return d.toObject(entity.getContent(), target);
-					} else {
-						LogFactory.getLog(this.getClass()).warn(
-								"no deserializer found");
-					}
-				}
-				return null;
-			}
-
-			@Override
-			public boolean closable() {
-				return true;
-			}
-		};
+		return new ObjectHttpClientDeserializer<T>(target,deserializer);
 	}
 
-	public static final HttpClientDeserializer<Response> RESPONSE(final Deserializer deserializer) {
+	public static HttpClientDeserializer<Response> reponse(final Deserializer deserializer) {
 
 		return new HttpClientDeserializer<Response>() {
 
@@ -124,4 +99,39 @@ public final class HttpClientDeserializers {
 			}
 		};
 	}
+	
+	public static final class ObjectHttpClientDeserializer<T> implements HttpClientDeserializer<T> {
+
+		private final Class<T> target;
+		private final Deserializer deserializer;
+		
+		public ObjectHttpClientDeserializer(Class<T> target,Deserializer deserializer){
+			this.target = target;
+			this.deserializer = deserializer;
+		}
+		
+		public T call(HttpEntity entity, HttpResponse response)
+				throws IOException {
+			Deserializer d = deserializer;
+			if (entity != null) {
+				if (d == null) {
+					d = IO.deserializer(
+							response.getLastHeader("Content-Type")
+									.getValue(), target);
+				}
+				if (d != null) {
+					return d.toObject(entity.getContent(), target);
+				} else {
+					LogFactory.getLog(this.getClass()).warn(
+							"no deserializer found");
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public boolean closable() {
+			return true;
+		}
+	};
 }
