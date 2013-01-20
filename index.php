@@ -29,12 +29,12 @@
       <div class="row">
         <div class="span6">
         	<h2>Authors and Contributors</h2>
-        		<p>Gaël Colin (<a href="https://github.com/gcolin" class="user-mention">@gcolin</a>)</p>
+        		<p>Gaël Colin (<a href="https://github.com/gcolin" target="_blank" class="user-mention">@gcolin</a>)</p>
         </div>
         <div class="span6">
         	<h2>Support or Contact</h2>
         	<p>You can send me mail for any suggestion.</p>
-        	<p class="copyright">Httpquery maintained by <a href="https://github.com/gcolin">gcolin</a></p>
+        	<p class="copyright">Httpquery maintained by <a href="https://github.com/gcolin" target="_blank">gcolin</a></p>
         </div>
        </div>
      

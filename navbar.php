@@ -10,7 +10,7 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li id="doc"><a href="doc.php">Documentation</a></li>
-              <li><a href="https://github.com/gcolin/HttpQuery">View on GitHub <img src="images/blacktocat.png" style="height:20px!important"/></a></li>
+              <li><a href="https://github.com/gcolin/HttpQuery" target="_blank">View on GitHub <img src="images/blacktocat.png" style="height:20px!important"/></a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
