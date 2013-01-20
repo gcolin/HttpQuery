@@ -38,5 +38,4 @@ public interface Request {
 	Request deserializeWith(Deserializer p);
 	Request deserializeWith(Class<? extends Deserializer> p);
 	Request setAuthBasic(String username, String password);
-	Request query(String name,Object value);
 }

@@ -147,11 +147,4 @@ public class RequestImpl implements Request {
 	public void setAsResponse(Response response) {
 		this.response = response;
 	}
-
-	@Override
-	public Request query(String name, Object value) {
-		
-		return null;
-	}
-	
 }

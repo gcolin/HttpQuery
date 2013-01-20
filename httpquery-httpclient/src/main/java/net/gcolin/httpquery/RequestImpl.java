@@ -126,10 +126,4 @@ public class RequestImpl extends AbstractElement implements Request {
 		deserializer = IO.deserializer(p);
 		return this;
 	}
-
-	@Override
-	public Request query(String name, Object value) {
-		
-		return null;
-	}
 }
