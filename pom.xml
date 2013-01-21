@@ -5,7 +5,7 @@
 	<artifactId>httpquery</artifactId>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
-	<version>1.0</version>
+	<version>1.1-SNAPSHOT</version>
 	<url>http://gcolin.net/httpquery</url>
 	<description>httpquery parent project</description>
 	

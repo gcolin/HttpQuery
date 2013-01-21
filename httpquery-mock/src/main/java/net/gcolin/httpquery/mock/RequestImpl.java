@@ -43,6 +43,7 @@ public class RequestImpl implements Request {
 	private String authBasicPassword;
 	private String authBasicLogin;
 	private Response response;
+	private int status;
 	
 	public Map<Class<? extends Deserializer>,Map<Class<?>,Object>> getAsMap() {
 		return asMap;
@@ -70,6 +71,10 @@ public class RequestImpl implements Request {
 
 	public void setAsString(String asString) {
 		this.asString = asString;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public void setInStream(InputStream inStream) {
@@ -146,5 +151,9 @@ public class RequestImpl implements Request {
 
 	public void setAsResponse(Response response) {
 		this.response = response;
+	}
+
+	public int send() {
+		return status;
 	}
 }

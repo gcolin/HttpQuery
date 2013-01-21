@@ -126,4 +126,8 @@ public class RequestImpl extends AbstractElement implements Request {
 		deserializer = IO.deserializer(p);
 		return this;
 	}
+
+	public int send() {
+		return callback(HttpClientDeserializers.VOID);
+	}
 }

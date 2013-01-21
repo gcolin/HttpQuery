@@ -31,6 +31,7 @@ public interface Request {
 	String asString();
 	InputStream asStream();
 	byte[] asBytes();
+	int send();
 	Response asResponse();
 	Request setContentType(String s);
 	Request setAcceptType(String s);

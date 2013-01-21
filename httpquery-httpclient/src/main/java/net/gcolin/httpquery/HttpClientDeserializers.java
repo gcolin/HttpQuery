@@ -65,6 +65,19 @@ public final class HttpClientDeserializers {
 			return true;
 		}
 	};
+	
+	public static final HttpClientDeserializer<Integer> VOID = new HttpClientDeserializer<Integer>() {
+
+		public Integer call(HttpEntity entity, HttpResponse response)
+				throws IOException {
+			return response.getStatusLine().getStatusCode();
+		}
+
+		@Override
+		public boolean closable() {
+			return true;
+		}
+	};
 
 	public static final HttpClientDeserializer<InputStream> STREAM = new HttpClientDeserializer<InputStream>() {
 
