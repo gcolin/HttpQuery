@@ -156,4 +156,8 @@ public class RequestImpl implements Request {
 	public int send() {
 		return status;
 	}
+
+	@Override
+	public void setDelegate(Object o) {
+	}
 }

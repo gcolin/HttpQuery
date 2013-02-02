@@ -34,40 +34,18 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.conn.scheme.PlainSocketFactory;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
 
 public class RequestImpl extends AbstractElement implements Request {
 
 	private HttpRequestBase delegate;
 	private Deserializer deserializer;
 
-	private static class BaseClient extends DefaultHttpClient {
-		private static final int HTTPS = 443;
-		private static final int HTTP = 80;
-
-		/**
-		 * gestion du multi thread
-		 */
-		@Override
-		protected org.apache.http.conn.ClientConnectionManager createClientConnectionManager() {
-			final SchemeRegistry registry = new SchemeRegistry();
-			registry.register(new Scheme("http", BaseClient.HTTP,
-					PlainSocketFactory.getSocketFactory()));
-			registry.register(new Scheme("https", BaseClient.HTTPS,
-					SSLSocketFactory.getSocketFactory()));
-			return new PoolingClientConnectionManager(registry);
-		};
-	}
 
 	/**
 	 * http client
 	 */
-	private static HttpClient http = new BaseClient();
+	private HttpClient http = new DefaultHttpClient();
 
 	public RequestImpl(HttpRequestBase delegate) {
 		this.delegate = delegate;
@@ -129,5 +107,12 @@ public class RequestImpl extends AbstractElement implements Request {
 
 	public int send() {
 		return callback(HttpClientDeserializers.VOID);
+	}
+
+	@Override
+	public void setDelegate(Object o) {
+		if(o!=null && o instanceof HttpClient){
+			http = (HttpClient) o;
+		}
 	}
 }
