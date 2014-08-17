@@ -24,6 +24,8 @@ package net.gcolin.httpquery.spi;
 
 
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerConfigurationException;
@@ -39,8 +41,6 @@ import net.gcolin.httpquery.ContentType;
 import net.gcolin.httpquery.For;
 import net.gcolin.httpquery.Serializer;
 
-import org.slf4j.LoggerFactory;
-
 @For({DOMSource.class,SAXSource.class,StAXSource.class,StreamSource.class})
 @ContentType("application/xml")
 public class SourceSerializer implements Serializer{
@@ -53,9 +53,9 @@ public class SourceSerializer implements Serializer{
 		try {
 			tf.newTransformer().transform((Source) obj, sr);
 		} catch (TransformerConfigurationException e) {
-			LoggerFactory.getLogger(this.getClass()).error(e.getMessage(), e);
+		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(), e);
 		} catch (TransformerException e) {
-			LoggerFactory.getLogger(this.getClass()).error(e.getMessage(), e);
+		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(), e);
 		}
 	}
 }

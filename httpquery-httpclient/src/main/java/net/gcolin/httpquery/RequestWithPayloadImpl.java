@@ -24,15 +24,11 @@ package net.gcolin.httpquery;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
-import net.gcolin.httpquery.IO;
-import net.gcolin.httpquery.Request;
-import net.gcolin.httpquery.RequestWithPayload;
-import net.gcolin.httpquery.Serializer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.entity.ByteArrayEntity;
-import org.slf4j.LoggerFactory;
 
 public class RequestWithPayloadImpl implements RequestWithPayload{
 
@@ -56,7 +52,7 @@ public class RequestWithPayloadImpl implements RequestWithPayload{
 					delegate.addHeader("Content-Type", type);
 				}
 			} catch (IOException e) {
-				LoggerFactory.getLogger(this.getClass()).error(e.getMessage(),e);
+			    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
 			}
 			
 		}

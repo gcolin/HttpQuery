@@ -1,17 +1,17 @@
 package net.gcolin.httpquery.examples;
 
-import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import net.gcolin.httpquery.Http;
 import net.gcolin.httpquery.examples.util.App;
 import net.gcolin.httpquery.examples.util.Data;
 import net.gcolin.httpquery.examples.util.SerializationUtil;
-import net.gcolin.httpquery.examples.util.TomcatServer;import net.gcolin.httpquery.spi.ObjectDeserializer;
+import net.gcolin.httpquery.examples.util.TomcatServer;
+import net.gcolin.httpquery.spi.ObjectDeserializer;
+
+import org.apache.commons.io.FileUtils;
 
 public final class SimpleObjectSerialized {
 	
@@ -22,7 +22,7 @@ public final class SimpleObjectSerialized {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		Logger log = LoggerFactory.getLogger(SimpleObjectSerialized.class);
+		Logger log = Logger.getLogger(SimpleObjectSerialized.class.getName());
 		
 		//create data for serialization
 		FileUtils.writeByteArrayToFile(new File("src/main/resources/webapp/obj.o"), SerializationUtil.createData());

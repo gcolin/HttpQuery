@@ -20,37 +20,31 @@
  *
  * @author Gael COLIN
  */
-package net.gcolin.httpquery.xstream;
+package net.gcolin.httpquery;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
+public abstract class AbstractElement {
 
-import net.gcolin.httpquery.Deserializer;
-import net.gcolin.httpquery.IO;
-
-import com.thoughtworks.xstream.XStream;
-
-public class XStreamDeserializer implements Deserializer{
-
-	private XStream xStream;
-	private Charset charset;
-	
-	public XStreamDeserializer(){
-		this(new XStream(),IO.getCharset());
+	protected <T> T callback(ClientDeserializer<T> c){
+		T out = null;
+		HttpURLConnection conn = null;
+		try {
+			conn = getResponse();
+			out = c.call(conn);
+		} catch (final Exception e) {
+		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,HttpHandlerImpl.ERROR_MESSAGE, e);
+		} finally {
+			if(c.closable() && conn != null){
+				conn.disconnect();
+			}
+		}
+		return out;
 	}
 	
-	public XStreamDeserializer(XStream xStream,Charset charset){
-		this.xStream=xStream;
-		this.charset=charset;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T toObject(InputStream inStream, Class<T> target) {
-		return (T) xStream.fromXML(new InputStreamReader(inStream,charset));
-	}
+	protected abstract HttpURLConnection getResponse() throws IOException;
 	
-
 }

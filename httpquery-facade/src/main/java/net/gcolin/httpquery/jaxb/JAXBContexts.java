@@ -2,11 +2,11 @@ package net.gcolin.httpquery.jaxb;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-
-import org.slf4j.LoggerFactory;
 
 public final class JAXBContexts {
 
@@ -20,7 +20,7 @@ public final class JAXBContexts {
 			try {
 				c = JAXBContext.newInstance(clazz);
 			} catch (JAXBException e) {
-				LoggerFactory.getLogger(JAXBContexts.class).error(e.getMessage(),e);
+				Logger.getLogger(JAXBContexts.class.getName()).log(Level.SEVERE,e.getMessage(),e);
 			}
 			contexts.put(clazz,c);
 		}

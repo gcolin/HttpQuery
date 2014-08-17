@@ -28,22 +28,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
+import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
+public final class ClientDeserializers {
 
-public final class HttpClientDeserializers {
-
-	private HttpClientDeserializers(){}
+	private ClientDeserializers(){}
 	
-	public static final HttpClientDeserializer<String> STRING = new HttpClientDeserializer<String>() {
+	public static final ClientDeserializer<String> STRING = new ClientDeserializer<String>() {
 
-		public String call(HttpEntity entity, HttpResponse response)
+		public String call(HttpURLConnection conn)
 				throws IOException {
 		    char[] b = new char[512];
             int c = 0;
-            Reader r = new InputStreamReader(entity.getContent(),
+            Reader r = new InputStreamReader(conn.getInputStream(),
                     IO.getCharset());
             StringWriter s = new StringWriter();
             while((c=r.read(b))>0)
@@ -59,13 +57,13 @@ public final class HttpClientDeserializers {
 		}
 	};
 
-	public static final HttpClientDeserializer<byte[]> BYTE = new HttpClientDeserializer<byte[]>() {
+	public static final ClientDeserializer<byte[]> BYTE = new ClientDeserializer<byte[]>() {
 
-		public byte[] call(HttpEntity entity, HttpResponse response)
+		public byte[] call(HttpURLConnection conn)
 				throws IOException {
 		    byte[] b = new byte[512];
 		    int c = 0;
-		    InputStream in = entity.getContent();
+		    InputStream in = conn.getInputStream();
 		    ByteArrayOutputStream out = new ByteArrayOutputStream();
 		    while((c=in.read(b))>0)
 		    {
@@ -80,11 +78,11 @@ public final class HttpClientDeserializers {
 		}
 	};
 	
-	public static final HttpClientDeserializer<Integer> VOID = new HttpClientDeserializer<Integer>() {
+	public static final ClientDeserializer<Integer> VOID = new ClientDeserializer<Integer>() {
 
-		public Integer call(HttpEntity entity, HttpResponse response)
+		public Integer call(HttpURLConnection conn)
 				throws IOException {
-			return response.getStatusLine().getStatusCode();
+			return conn.getResponseCode();
 		}
 
 		@Override
@@ -93,11 +91,11 @@ public final class HttpClientDeserializers {
 		}
 	};
 
-	public static final HttpClientDeserializer<InputStream> STREAM = new HttpClientDeserializer<InputStream>() {
+	public static final ClientDeserializer<InputStream> STREAM = new ClientDeserializer<InputStream>() {
 
-		public InputStream call(HttpEntity entity, HttpResponse response)
+		public InputStream call(HttpURLConnection conn)
 				throws IOException {
-			return entity.getContent();
+			return conn.getInputStream();
 		}
 
 		@Override
@@ -106,18 +104,18 @@ public final class HttpClientDeserializers {
 		}
 	};
 
-	public static <T> HttpClientDeserializer<T> object(final Class<T> target,
+	public static <T> ClientDeserializer<T> object(final Class<T> target,
 			final Deserializer deserializer) {
 		return new ObjectHttpClientDeserializer<T>(target,deserializer);
 	}
 
-	public static HttpClientDeserializer<Response> reponse(final Deserializer deserializer) {
+	public static ClientDeserializer<Response> reponse(final Deserializer deserializer) {
 
-		return new HttpClientDeserializer<Response>() {
+		return new ClientDeserializer<Response>() {
 
-			public Response call(HttpEntity entity, HttpResponse response)
+			public Response call(HttpURLConnection conn)
 					throws IOException {
-				return new ResponseImpl(response, deserializer);
+				return new ResponseImpl(conn, deserializer);
 			}
 
 			@Override
@@ -127,7 +125,7 @@ public final class HttpClientDeserializers {
 		};
 	}
 	
-	public static final class ObjectHttpClientDeserializer<T> implements HttpClientDeserializer<T> {
+	public static final class ObjectHttpClientDeserializer<T> implements ClientDeserializer<T> {
 
 		private final Class<T> target;
 		private final Deserializer deserializer;
@@ -137,17 +135,16 @@ public final class HttpClientDeserializers {
 			this.deserializer = deserializer;
 		}
 		
-		public T call(HttpEntity entity, HttpResponse response)
+		public T call(HttpURLConnection conn)
 				throws IOException {
 			Deserializer d = deserializer;
-			if (entity != null) {
+			if (conn != null) {
 				if (d == null) {
 					d = IO.deserializer(
-							response.getLastHeader("Content-Type")
-									.getValue(), target);
+					        conn.getHeaderField("Content-Type"), target);
 				}
 				if (d != null) {
-					return d.toObject(entity.getContent(), target);
+					return d.toObject(conn.getInputStream(), target);
 				} else {
 					Logger.getLogger(this.getClass().getName()).warning(
 							"no deserializer found");

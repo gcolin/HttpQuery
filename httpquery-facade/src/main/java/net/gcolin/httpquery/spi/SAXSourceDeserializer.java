@@ -24,6 +24,8 @@ package net.gcolin.httpquery.spi;
 
 
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.transform.sax.SAXSource;
 
@@ -31,7 +33,6 @@ import net.gcolin.httpquery.Accept;
 import net.gcolin.httpquery.Deserializer;
 import net.gcolin.httpquery.For;
 
-import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
 @For(SAXSource.class)
@@ -44,7 +45,7 @@ public class SAXSourceDeserializer implements Deserializer{
 		try {
 			return (T) new SAXSource(new InputSource(inStream));
 		} catch (Exception e) {
-			LoggerFactory.getLogger(this.getClass()).error(e.getMessage(),e);
+			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
 		} 
 		return null;
 	}

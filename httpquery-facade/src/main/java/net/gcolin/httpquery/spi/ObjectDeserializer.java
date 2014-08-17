@@ -25,12 +25,12 @@ package net.gcolin.httpquery.spi;
 
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.gcolin.httpquery.Accept;
 import net.gcolin.httpquery.Deserializer;
 import net.gcolin.httpquery.For;
-
-import org.slf4j.LoggerFactory;
 
 
 @For(Object.class)
@@ -46,7 +46,7 @@ public class ObjectDeserializer implements Deserializer{
 			out = (T) o.readObject();
 			o.close();
 		} catch (Exception e) {
-			LoggerFactory.getLogger(this.getClass()).error(e.getMessage(),e);
+			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
 		}
 		return out;
 	}

@@ -3,3 +3,6 @@ net.gcolin.httpquery.spi.SourceSerializer
 net.gcolin.httpquery.spi.XMLObjectSerializer
 net.gcolin.httpquery.jaxb.JAXBSerializer
 net.gcolin.httpquery.jaxb.JAXBPrettySerializer
+net.gcolin.httpquery.spi.BytesSerializer
+net.gcolin.httpquery.spi.StringSerializer
+net.gcolin.httpquery.spi.InputStreamSerializer

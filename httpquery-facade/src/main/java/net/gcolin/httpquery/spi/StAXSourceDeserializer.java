@@ -24,6 +24,8 @@ package net.gcolin.httpquery.spi;
 
 
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.transform.stax.StAXSource;
@@ -31,8 +33,6 @@ import javax.xml.transform.stax.StAXSource;
 import net.gcolin.httpquery.Accept;
 import net.gcolin.httpquery.Deserializer;
 import net.gcolin.httpquery.For;
-
-import org.slf4j.LoggerFactory;
 
 @For(StAXSource.class)
 @Accept("application/xml,text/xml,xml,application/x-java-serialized-object+xml")
@@ -46,7 +46,7 @@ public class StAXSourceDeserializer implements Deserializer{
 		try {
 			return (T) new StAXSource(xf.createXMLStreamReader(inStream));
 		} catch (Exception e) {
-			LoggerFactory.getLogger(this.getClass()).error(e.getMessage(),e);
+		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
 		} 
 		return null;
 	}

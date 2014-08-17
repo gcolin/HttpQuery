@@ -20,37 +20,13 @@
  *
  * @author Gael COLIN
  */
-package net.gcolin.httpquery.xstream;
+package net.gcolin.httpquery;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
+import java.net.HttpURLConnection;
 
-import net.gcolin.httpquery.IO;
-import net.gcolin.httpquery.Serializer;
+public interface ClientDeserializer<T> {
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.CompactWriter;
-
-
-public class XStreamSerializer implements Serializer{
-
-	private XStream xStream;
-	private Charset charset;
-	
-	public XStreamSerializer(){
-		this(new XStream(),IO.getCharset());
-	}
-	
-	public XStreamSerializer(XStream xStream,Charset charset){
-		this.xStream=xStream;
-		this.charset=charset;
-	}
-	
-	@Override
-	public void write(OutputStream outStream, Object obj) throws IOException {
-		xStream.marshal(obj, new CompactWriter(new OutputStreamWriter(outStream, charset)));
-	}
-
+	T call(HttpURLConnection conn) throws IOException;
+	boolean closable();
 }

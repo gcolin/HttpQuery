@@ -24,9 +24,8 @@
 package net.gcolin.httpquery;
 
 import java.io.InputStream;
-
-import org.slf4j.LoggerFactory;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  * facade for using httpQuery.
  * 
@@ -57,7 +56,7 @@ public final class Http {
 			Class<?> c=Http.class.getClassLoader().loadClass("net.gcolin.httpquery.HttpHandlerImpl");
 			handler = (HttpHandler) c.newInstance();
 		} catch (Exception e) {
-			LoggerFactory.getLogger(Http.class).error("cannot find an implementation of HttpHandler");
+			Logger.getLogger(Http.class.getName()).log(Level.SEVERE,"cannot find an implementation of HttpHandler");
 		}
 	}
 	

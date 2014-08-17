@@ -27,8 +27,8 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.LoggerFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.gcolin.httpquery.Deserializer;
 import net.gcolin.httpquery.Request;
@@ -96,7 +96,7 @@ public class MockRequest {
 			Map<String, Request>  map = (Map<String, Request>) getter().invoke(MockHttpHandler.getInstance());
 			map.put(uri, r);
 		} catch (Exception e) {
-			LoggerFactory.getLogger(this.getClass()).error("cannot add request",e);
+		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,"cannot add request",e);
 		}
 	}
 	
@@ -109,7 +109,7 @@ public class MockRequest {
 				return (RequestImpl) r;
 			}
 		} catch (Exception e) {
-			LoggerFactory.getLogger(this.getClass()).error("cannot get request",e);
+		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,"cannot get request",e);
 		}
 		return new RequestImpl();
 	}

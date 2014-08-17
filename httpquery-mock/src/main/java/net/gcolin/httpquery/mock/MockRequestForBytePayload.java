@@ -25,8 +25,8 @@ package net.gcolin.httpquery.mock;
 
 import java.lang.reflect.Method;
 import java.util.Map;
-
-import org.slf4j.LoggerFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.gcolin.httpquery.Request;
 
@@ -47,7 +47,7 @@ public class MockRequestForBytePayload extends MockRequest{
 			Map<Item<String, byte[]>, Request>  map = (Map<Item<String, byte[]>, Request>) getter().invoke(MockHttpHandler.getInstance());
 			map.put(new Item<String, byte[]>(getUri(),payload), r);
 		} catch (Exception e) {
-			LoggerFactory.getLogger(this.getClass()).error("cannot add request",e);
+			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,"cannot add request",e);
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class MockRequestForBytePayload extends MockRequest{
 				return (RequestImpl) r;
 			}
 		} catch (Exception e) {
-			LoggerFactory.getLogger(this.getClass()).error("cannot get request",e);
+			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,"cannot get request",e);
 		}
 		return new RequestImpl();
 	}

@@ -22,40 +22,50 @@
  */
 package net.gcolin.httpquery;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.util.EntityUtils;
+public class RequestWithPayloadImpl implements RequestWithPayload{
 
-public abstract class AbstractElement {
+	private Object obj;
+	private String method;
+	private String uri;
 
-	protected <T> T callback(HttpClientDeserializer<T> c){
-		T out = null;
-		HttpEntity entity = null;
-		try {
-			HttpResponse response = getResponse();
-			entity = response.getEntity();
-			out = c.call(entity,response);
-		} catch (final Exception e) {
-		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,HttpHandlerImpl.ERROR_MESSAGE, e);
-		} finally {
-			if(c.closable()){
-				close(entity);
+	public RequestWithPayloadImpl(String method,String uri,
+			Object obj) {
+	    this.method = method;
+        this.uri = uri;
+		this.obj = obj;
+	}
+
+	public Request serializeWith(Serializer s) {
+		if(s!=null){
+			try {
+				ByteArrayOutputStream out=new ByteArrayOutputStream();
+				s.write(out, obj);
+				RequestImpl r =  new RequestImpl(method, uri).data(out.toByteArray());
+				String type = IO.contentType(s);
+				if(type!=null){
+					r.header("Content-Type", type);
+				}
+				return r;
+			} catch (IOException e) {
+			    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
 			}
+			
 		}
-		return out;
+		throw new IllegalArgumentException("serializer cannot be null");
 	}
-	
-	protected abstract HttpResponse getResponse() throws IOException;
-	
-	protected void close(HttpEntity entity) {
-		try {
-			EntityUtils.consume(entity);
-		} catch (final IOException e) {
-		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,HttpHandlerImpl.ERROR_MESSAGE, e);
-		}
+
+	public Request serialize() {
+		return serializeWith(IO.serializerAs(obj.getClass()));
 	}
+
+	@Override
+	public Request serializeWith(Class<? extends Serializer> serializer) {
+		return serializeWith(IO.serializer(serializer));
+	}
+
 }

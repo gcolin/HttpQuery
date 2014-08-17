@@ -4,9 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
-import org.slf4j.LoggerFactory;
 
 
 public final class SerializationUtil{
@@ -35,7 +36,7 @@ public final class SerializationUtil{
 		ObjectOutputStream oo = new ObjectOutputStream(bout);
 		oo.writeObject(data);
 		}catch (Exception e) {
-			LoggerFactory.getLogger(SerializationUtil.class).error(e.getMessage(),e);
+			Logger.getLogger(SerializationUtil.class.getName()).log(Level.SEVERE,e.getMessage(),e);
 		}finally{
 			IOUtils.closeQuietly(bout);
 		}

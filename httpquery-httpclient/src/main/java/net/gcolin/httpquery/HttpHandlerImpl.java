@@ -24,11 +24,8 @@ package net.gcolin.httpquery;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-
-import net.gcolin.httpquery.Http;
-import net.gcolin.httpquery.HttpHandler;
-import net.gcolin.httpquery.Request;
-import net.gcolin.httpquery.RequestWithPayload;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -40,7 +37,6 @@ import org.apache.http.client.methods.HttpTrace;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
-import org.slf4j.LoggerFactory;
 
 public class HttpHandlerImpl implements HttpHandler{
 
@@ -74,7 +70,7 @@ public class HttpHandlerImpl implements HttpHandler{
 		try {
 			put.setEntity(new StringEntity(str));
 		} catch (UnsupportedEncodingException e) {
-			LoggerFactory.getLogger(Http.class).error(e.getMessage(),e);
+		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
 		}
 		return new RequestImpl(put);
 	}
@@ -111,7 +107,7 @@ public class HttpHandlerImpl implements HttpHandler{
 		try {
 			post.setEntity(new StringEntity(str));
 		} catch (UnsupportedEncodingException e) {
-			LoggerFactory.getLogger(Http.class).error(e.getMessage(),e);
+		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
 		}
 		return new RequestImpl(post);
 	}

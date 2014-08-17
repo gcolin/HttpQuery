@@ -23,10 +23,10 @@
 package net.gcolin.httpquery.jackson;
 
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.gcolin.httpquery.Deserializer;
-
-import org.slf4j.LoggerFactory;
 
 public class JacksonDeserializer implements Deserializer{
 
@@ -35,7 +35,7 @@ public class JacksonDeserializer implements Deserializer{
 		try {
 			return JacksonInstance.MAP.readValue(inStream, target);
 		} catch (Exception e) {
-			LoggerFactory.getLogger(this.getClass()).error(e.getMessage(),e);
+		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
 			return null;
 		} 
 	}

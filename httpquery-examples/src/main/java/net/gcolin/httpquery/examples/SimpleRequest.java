@@ -1,7 +1,6 @@
 package net.gcolin.httpquery.examples;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Logger;
 
 import net.gcolin.httpquery.Http;
 import net.gcolin.httpquery.examples.util.TomcatServer;
@@ -14,7 +13,7 @@ public final class SimpleRequest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Logger log = LoggerFactory.getLogger(SimpleRequest.class);
+	    Logger log = Logger.getLogger(SimpleRequest.class.getName());
 		
 		TomcatServer.start();
 		
