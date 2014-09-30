@@ -22,22 +22,21 @@
  */
 package net.gcolin.httpquery.spi;
 
+import java.beans.XMLEncoder;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 import net.gcolin.httpquery.ContentType;
 import net.gcolin.httpquery.Serializer;
 
-
-
 @ContentType("application/x-java-serialized-object+xml")
 public class XMLObjectSerializer implements Serializer {
 
-	@Override
-	public void write(OutputStream outStream, Object obj) throws IOException {
-		ObjectOutputStream oo = new ObjectOutputStream(outStream);
-		oo.writeObject(obj);
-	}
+    @Override
+    public void write(OutputStream outStream, Object obj) throws IOException {
+        try (XMLEncoder encoder = new XMLEncoder(outStream)) {
+            encoder.writeObject(obj);
+        }
+    }
 
 }

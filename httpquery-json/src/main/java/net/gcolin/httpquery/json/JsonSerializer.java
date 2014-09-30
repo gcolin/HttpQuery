@@ -20,19 +20,30 @@
  *
  * @author Gael COLIN
  */
-package net.gcolin.httpquery.jackson;
+package net.gcolin.httpquery.json;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
+import javax.ws.rs.core.MediaType;
+
+import org.juikito.JSON;
+
+import net.gcolin.httpquery.Accept;
+import net.gcolin.httpquery.For;
 import net.gcolin.httpquery.Serializer;
 
-
-public class JacksonSerializer implements Serializer{
+@Accept(MediaType.APPLICATION_JSON)
+@For(Object.class)
+public class JsonSerializer implements Serializer{
 
 		@Override
 	public void write(OutputStream outStream, Object obj) throws IOException {
-		JacksonInstance.MAP.writeValue(outStream, obj);
+		try {
+            JSON.write(obj, outStream);
+        } catch (Exception e) {
+            throw new IOException(e);
+        }
 	}
 
 }

@@ -143,14 +143,14 @@ public final class HttpClientDeserializers {
 			if (entity != null) {
 				if (d == null) {
 					d = IO.deserializer(
-							response.getLastHeader("Content-Type")
+					        response.getEntity().getContentType()
 									.getValue(), target);
 				}
 				if (d != null) {
 					return d.toObject(entity.getContent(), target);
 				} else {
 					Logger.getLogger(this.getClass().getName()).warning(
-							"no deserializer found");
+							"no deserializer found : \n"+entity.getContent());
 				}
 			}
 			return null;

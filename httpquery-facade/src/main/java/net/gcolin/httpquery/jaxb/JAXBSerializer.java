@@ -7,8 +7,12 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import net.gcolin.httpquery.Accept;
+import net.gcolin.httpquery.For;
 import net.gcolin.httpquery.Serializer;
 
+@Accept("application/xml")
+@For(Object.class)
 public class JAXBSerializer implements Serializer{
 
 	@Override

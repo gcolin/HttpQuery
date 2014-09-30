@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -86,6 +87,9 @@ public class RequestImpl extends AbstractElement implements Request {
 	}
 
 	protected HttpResponse getResponse() throws IOException {
+	    if(!delegate.containsHeader(HttpHeaders.ACCEPT)){
+	        delegate.addHeader(HttpHeaders.ACCEPT, "*/*");
+	    }
 		return http.execute(delegate);
 	}
 

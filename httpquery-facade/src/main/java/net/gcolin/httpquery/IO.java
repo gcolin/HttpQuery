@@ -101,6 +101,10 @@ public final class IO {
 	
 	public static Deserializer deserializer(String contentType,Class<?> clazz){
 		Map<Class<?>, Deserializer> map = deserializers.get(formatContentType(contentType));
+		if(map == null)
+		{
+		    return null;
+		}
 		Deserializer s = map.get(clazz);
 		if(s==null){
 			s = map.get(null);

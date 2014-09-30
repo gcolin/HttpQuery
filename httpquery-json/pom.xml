@@ -6,7 +6,7 @@
 		<artifactId>httpquery</artifactId>
 		<version>1.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>httpquery-jackson</artifactId>
+	<artifactId>httpquery-json</artifactId>
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
 	<dependencies>
@@ -15,15 +15,10 @@
 			<artifactId>httpquery-facade</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.8.2</version>
+			<groupId>org.juikito</groupId>
+			<artifactId>juikito-rs-json</artifactId>
+			<version>0.1</version>
 		</dependency>
-		<dependency>
-    <groupId>org.codehaus.jackson</groupId>
-    <artifactId>jackson-xc</artifactId>
-    <version>1.8.2</version>
-</dependency>
 	</dependencies>
 
 </project>

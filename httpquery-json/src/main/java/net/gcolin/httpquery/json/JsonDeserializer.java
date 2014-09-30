@@ -20,20 +20,28 @@
  *
  * @author Gael COLIN
  */
-package net.gcolin.httpquery.jackson;
+package net.gcolin.httpquery.json;
 
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.gcolin.httpquery.Deserializer;
+import javax.ws.rs.core.MediaType;
 
-public class JacksonDeserializer implements Deserializer{
+import org.juikito.JSON;
+
+import net.gcolin.httpquery.Accept;
+import net.gcolin.httpquery.Deserializer;
+import net.gcolin.httpquery.For;
+
+@Accept(MediaType.APPLICATION_JSON)
+@For(Object.class)
+public class JsonDeserializer implements Deserializer{
 
 	@Override
 	public <T> T toObject(InputStream inStream, Class<T> target) {
 		try {
-			return JacksonInstance.MAP.readValue(inStream, target);
+			return JSON.read(target, target, inStream);
 		} catch (Exception e) {
 		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
 			return null;
