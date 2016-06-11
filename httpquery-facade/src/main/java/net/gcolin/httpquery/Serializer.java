@@ -28,5 +28,5 @@ import java.io.OutputStream;
 
 public interface Serializer {
 
-	void write(OutputStream outStream,Object obj) throws IOException;
+    void write(OutputStream outStream, Object obj) throws IOException;
 }

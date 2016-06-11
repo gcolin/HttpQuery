@@ -22,7 +22,6 @@
  */
 package net.gcolin.httpquery.spi;
 
-
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,16 +36,17 @@ import org.xml.sax.InputSource;
 
 @For(SAXSource.class)
 @Accept("application/xml,text/xml,xml,application/x-java-serialized-object+xml")
-public class SAXSourceDeserializer implements Deserializer{
+public class SAXSourceDeserializer implements Deserializer {
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T toObject(InputStream inStream, Class<T> target) {
-		try {
-			return (T) new SAXSource(new InputSource(inStream));
-		} catch (Exception e) {
-			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
-		} 
-		return null;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T toObject(InputStream inStream, Class<T> target) {
+        try {
+            return (T) new SAXSource(new InputSource(inStream));
+        } catch (Exception e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    e.getMessage(), e);
+        }
+        return null;
+    }
 }

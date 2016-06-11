@@ -32,95 +32,95 @@ import java.util.Map;
 
 public class RequestImpl extends AbstractElement implements Request {
 
-	private Deserializer deserializer;
-	private String method;
-	private String uri;
-	private byte[] data;
-	private Map<String, String> headers = new HashMap<String, String>();
-	private CookieManager cm = ClientStrategy.createClient();
+    private Deserializer deserializer;
+    private String method;
+    private String uri;
+    private byte[] data;
+    private Map<String, String> headers = new HashMap<String, String>();
+    private CookieManager cm = ClientStrategy.createClient();
 
-	public RequestImpl(String method,String uri) {
-		this.method = method;
-		this.uri = uri;
-	}
-	
-	public RequestImpl data(byte[] b)
-	{
-	    this.data = b;
-	    return this;
-	}
+    public RequestImpl(String method, String uri) {
+        this.method = method;
+        this.uri = uri;
+    }
 
-	public <T> T as(Class<T> target) {
-		return callback(ClientDeserializers.object(target, deserializer));
-	}
+    public RequestImpl data(byte[] b) {
+        this.data = b;
+        return this;
+    }
 
-	public String asString() {
-		return callback(ClientDeserializers.STRING);
-	}
+    public <T> T as(Class<T> target) {
+        return callback(ClientDeserializers.object(target, deserializer));
+    }
 
-	public byte[] asBytes() {
-		return callback(ClientDeserializers.BYTE);
-	}
-	
-	public InputStream asStream() {
-		return callback(ClientDeserializers.STREAM);
-	}
+    public String asString() {
+        return callback(ClientDeserializers.STRING);
+    }
 
-	public Response asResponse() {
-		return callback(ClientDeserializers.reponse(deserializer));
-	}
+    public byte[] asBytes() {
+        return callback(ClientDeserializers.BYTE);
+    }
 
-	public RequestImpl setContentType(String s) {
-	    header("Content-Type", s);
-		return this;
-	}
+    public InputStream asStream() {
+        return callback(ClientDeserializers.STREAM);
+    }
 
-	public Request setAcceptType(String s) {
-		return header("Accept", s);
-	}
+    public Response asResponse() {
+        return callback(ClientDeserializers.reponse(deserializer));
+    }
 
-	public Request deserializeWith(Deserializer p) {
-		deserializer = p;
-		return this;
-	}
+    public RequestImpl setContentType(String s) {
+        header("Content-Type", s);
+        return this;
+    }
 
-	public Request setAuthBasic(String username, String password) {
-		return header("Authorization","Basic "
-				+ Base64.getEncoder().encodeToString((username + ":" + password)
-						.getBytes()));
-	}
+    public Request setAcceptType(String s) {
+        return header("Accept", s);
+    }
 
-	protected HttpURLConnection getResponse() throws IOException {
-	    URL url = new URL(uri);
-	    HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-	    httpCon.setRequestMethod(method);
-	    cm.setCookies(httpCon);
-	    if(data!=null)
-	    {
-	        httpCon.setDoOutput(true);
-	        httpCon.getOutputStream().write(data);
-	    }
-	    httpCon.connect();
-	    cm.storeCookies(httpCon);
-		return httpCon;
-	}
+    public Request deserializeWith(Deserializer p) {
+        deserializer = p;
+        return this;
+    }
 
-	public Request header(String key, String value) {
-	    headers.put(key, value);
-		return this;
-	}
+    public Request setAuthBasic(String username, String password) {
+        return header(
+                "Authorization",
+                "Basic "
+                        + Base64.getEncoder().encodeToString(
+                                (username + ":" + password).getBytes()));
+    }
 
-	public Request deserializeWith(Class<? extends Deserializer> p) {
-		deserializer = IO.deserializer(p);
-		return this;
-	}
+    protected HttpURLConnection getResponse() throws IOException {
+        URL url = new URL(uri);
+        HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+        httpCon.setRequestMethod(method);
+        cm.setCookies(httpCon);
+        if (data != null) {
+            httpCon.setDoOutput(true);
+            httpCon.getOutputStream().write(data);
+        }
+        httpCon.connect();
+        cm.storeCookies(httpCon);
+        return httpCon;
+    }
 
-	public int send() {
-		return callback(ClientDeserializers.VOID);
-	}
+    public Request header(String key, String value) {
+        headers.put(key, value);
+        return this;
+    }
 
-	@Override
-	public void setDelegate(Object o) {
-		
-	}
+    public Request deserializeWith(Class<? extends Deserializer> p) {
+        deserializer = IO.deserializer(p);
+        return this;
+    }
+
+    public int send() {
+        return callback(ClientDeserializers.VOID);
+    }
+
+    @Override
+    public void setDelegate(Object o) {
+        throw new UnsupportedOperationException();
+    }
 }

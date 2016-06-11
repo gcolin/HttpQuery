@@ -7,7 +7,7 @@ import net.gcolin.httpquery.For;
 import net.gcolin.httpquery.Serializer;
 
 @For(String.class)
-public class StringSerializer implements Serializer{
+public class StringSerializer implements Serializer {
 
     @Override
     public void write(OutputStream outStream, Object obj) throws IOException {

@@ -31,131 +31,129 @@ import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
+import net.gcolin.httpquery.spi.InputStreamSerializer;
+
 public final class ClientDeserializers {
 
-	private ClientDeserializers(){}
-	
-	public static final ClientDeserializer<String> STRING = new ClientDeserializer<String>() {
+    public static final ClientDeserializer<String> STRING = new ClientDeserializer<String>() {
 
-		public String call(HttpURLConnection conn)
-				throws IOException {
-		    char[] b = new char[512];
+        public String call(HttpURLConnection conn) throws IOException {
+            char[] b = new char[InputStreamSerializer.BUFFER_SIZE];
             int c = 0;
             Reader r = new InputStreamReader(conn.getInputStream(),
                     IO.getCharset());
             StringWriter s = new StringWriter();
-            while((c=r.read(b))>0)
-            {
-                s.write(b,0,c);
+            while ((c = r.read(b)) > 0) {
+                s.write(b, 0, c);
             }
             return s.toString();
-		}
+        }
 
-		@Override
-		public boolean closable() {
-			return true;
-		}
-	};
+        @Override
+        public boolean closable() {
+            return true;
+        }
+    };
 
-	public static final ClientDeserializer<byte[]> BYTE = new ClientDeserializer<byte[]>() {
+    public static final ClientDeserializer<byte[]> BYTE = new ClientDeserializer<byte[]>() {
 
-		public byte[] call(HttpURLConnection conn)
-				throws IOException {
-		    byte[] b = new byte[512];
-		    int c = 0;
-		    InputStream in = conn.getInputStream();
-		    ByteArrayOutputStream out = new ByteArrayOutputStream();
-		    while((c=in.read(b))>0)
-		    {
-		        out.write(b,0,c);
-		    }
-			return out.toByteArray();
-		}
+        public byte[] call(HttpURLConnection conn) throws IOException {
+            byte[] b = new byte[InputStreamSerializer.BUFFER_SIZE];
+            int c = 0;
+            InputStream in = conn.getInputStream();
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            while ((c = in.read(b)) > 0) {
+                out.write(b, 0, c);
+            }
+            return out.toByteArray();
+        }
 
-		@Override
-		public boolean closable() {
-			return true;
-		}
-	};
-	
-	public static final ClientDeserializer<Integer> VOID = new ClientDeserializer<Integer>() {
+        @Override
+        public boolean closable() {
+            return true;
+        }
+    };
 
-		public Integer call(HttpURLConnection conn)
-				throws IOException {
-			return conn.getResponseCode();
-		}
+    public static final ClientDeserializer<Integer> VOID = new ClientDeserializer<Integer>() {
 
-		@Override
-		public boolean closable() {
-			return true;
-		}
-	};
+        public Integer call(HttpURLConnection conn) throws IOException {
+            return conn.getResponseCode();
+        }
 
-	public static final ClientDeserializer<InputStream> STREAM = new ClientDeserializer<InputStream>() {
+        @Override
+        public boolean closable() {
+            return true;
+        }
+    };
 
-		public InputStream call(HttpURLConnection conn)
-				throws IOException {
-			return conn.getInputStream();
-		}
+    public static final ClientDeserializer<InputStream> STREAM = new ClientDeserializer<InputStream>() {
 
-		@Override
-		public boolean closable() {
-			return false;
-		}
-	};
+        public InputStream call(HttpURLConnection conn) throws IOException {
+            return conn.getInputStream();
+        }
 
-	public static <T> ClientDeserializer<T> object(final Class<T> target,
-			final Deserializer deserializer) {
-		return new ObjectHttpClientDeserializer<T>(target,deserializer);
-	}
+        @Override
+        public boolean closable() {
+            return false;
+        }
+    };
+    
+    private ClientDeserializers() {
+    }
 
-	public static ClientDeserializer<Response> reponse(final Deserializer deserializer) {
+    public static <T> ClientDeserializer<T> object(final Class<T> target,
+            final Deserializer deserializer) {
+        return new ObjectHttpClientDeserializer<T>(target, deserializer);
+    }
 
-		return new ClientDeserializer<Response>() {
+    public static ClientDeserializer<Response> reponse(
+            final Deserializer deserializer) {
 
-			public Response call(HttpURLConnection conn)
-					throws IOException {
-				return new ResponseImpl(conn, deserializer);
-			}
+        return new ClientDeserializer<Response>() {
 
-			@Override
-			public boolean closable() {
-				return false;
-			}
-		};
-	}
-	
-	public static final class ObjectHttpClientDeserializer<T> implements ClientDeserializer<T> {
+            public Response call(HttpURLConnection conn) throws IOException {
+                return new ResponseImpl(conn, deserializer);
+            }
 
-		private final Class<T> target;
-		private final Deserializer deserializer;
-		
-		public ObjectHttpClientDeserializer(Class<T> target,Deserializer deserializer){
-			this.target = target;
-			this.deserializer = deserializer;
-		}
-		
-		public T call(HttpURLConnection conn)
-				throws IOException {
-			Deserializer d = deserializer;
-			if (conn != null) {
-				if (d == null) {
-					d = IO.deserializer(
-					        conn.getHeaderField("Content-Type"), target);
-				}
-				if (d != null) {
-					return d.toObject(conn.getInputStream(), target);
-				} else {
-					Logger.getLogger(this.getClass().getName()).warning(
-							"no deserializer found");
-				}
-			}
-			return null;
-		}
+            @Override
+            public boolean closable() {
+                return false;
+            }
+        };
+    }
 
-		@Override
-		public boolean closable() {
-			return true;
-		}
-	};
+    public static final class ObjectHttpClientDeserializer<T> implements
+            ClientDeserializer<T> {
+
+        private final Class<T> target;
+        private final Deserializer deserializer;
+
+        public ObjectHttpClientDeserializer(Class<T> target,
+                Deserializer deserializer) {
+            this.target = target;
+            this.deserializer = deserializer;
+        }
+
+        public T call(HttpURLConnection conn) throws IOException {
+            Deserializer d = deserializer;
+            if (conn != null) {
+                if (d == null) {
+                    d = IO.deserializer(conn.getHeaderField("Content-Type"),
+                            target);
+                }
+                if (d != null) {
+                    return d.toObject(conn.getInputStream(), target);
+                } else {
+                    Logger.getLogger(this.getClass().getName()).warning(
+                            "no deserializer found");
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public boolean closable() {
+            return true;
+        }
+    }
 }

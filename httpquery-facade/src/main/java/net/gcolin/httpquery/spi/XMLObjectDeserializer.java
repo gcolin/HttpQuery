@@ -31,23 +31,23 @@ import net.gcolin.httpquery.Accept;
 import net.gcolin.httpquery.Deserializer;
 import net.gcolin.httpquery.For;
 
-
 @Accept("application/x-java-serialized-object+xml")
 @For(Object.class)
-public class XMLObjectDeserializer implements Deserializer{
+public class XMLObjectDeserializer implements Deserializer {
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T toObject(InputStream inStream, Class<T> target) {
-		T out=null;
-		try {
-			XMLDecoder decoder=new XMLDecoder(inStream);
-			out = (T) decoder.readObject();
-			decoder.close();
-		} catch (Exception e) {
-		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
-		}
-		return out;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T toObject(InputStream inStream, Class<T> target) {
+        T out = null;
+        try {
+            XMLDecoder decoder = new XMLDecoder(inStream);
+            out = (T) decoder.readObject();
+            decoder.close();
+        } catch (Exception e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    e.getMessage(), e);
+        }
+        return out;
+    }
 
 }

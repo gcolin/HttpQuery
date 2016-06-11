@@ -30,16 +30,14 @@ import net.gcolin.httpquery.ContentType;
 import net.gcolin.httpquery.For;
 import net.gcolin.httpquery.Serializer;
 
-
 @For(Object.class)
 @ContentType("application/x-java-serialized-object")
-public class ObjectSerializer implements Serializer{
+public class ObjectSerializer implements Serializer {
 
-
-	@Override
-	public void write(OutputStream outStream, Object obj) throws IOException{
-		ObjectOutputStream oo = new ObjectOutputStream(outStream);
-		oo.writeObject(obj);
-	}
+    @Override
+    public void write(OutputStream outStream, Object obj) throws IOException {
+        ObjectOutputStream oo = new ObjectOutputStream(outStream);
+        oo.writeObject(obj);
+    }
 
 }

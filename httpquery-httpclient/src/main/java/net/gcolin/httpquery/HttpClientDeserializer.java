@@ -29,6 +29,7 @@ import org.apache.http.HttpResponse;
 
 public interface HttpClientDeserializer<T> {
 
-	T call(HttpEntity entity,HttpResponse response) throws IOException;
-	boolean closable();
+    T call(HttpEntity entity, HttpResponse response) throws IOException;
+
+    boolean closable();
 }

@@ -8,24 +8,26 @@ import net.gcolin.httpquery.mock.When;
 
 public final class SimpleMockRequest {
 
-	private SimpleMockRequest(){}
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-	    Logger log = Logger.getLogger(SimpleMockRequest.class.getName());
-		
-		//active mocking
-		MockHttpHandler.bind(true);
-		
-		When.get("http://localhost:8880/index.html").asStringReturn("hello world");
-		
-		log.info(Http.get("http://localhost:8880/index.html").asString());
-		
-		//remove mocking
-		MockHttpHandler.bind(false);
-		
-	}
+    private static final Logger LOG = Logger.getLogger(SimpleMockRequest.class.getName());
+    
+    private SimpleMockRequest() {
+    }
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        // active mocking
+        MockHttpHandler.bind(true);
+
+        When.get("http://localhost:8880/index.html").asStringReturn(
+                "hello world");
+
+        LOG.info(Http.get("http://localhost:8880/index.html").asString());
+
+        // remove mocking
+        MockHttpHandler.bind(false);
+
+    }
 
 }

@@ -26,26 +26,28 @@ import net.gcolin.httpquery.Serializer;
 
 public class MockRequestWithPayload {
 
-	private String uri;
-	private Object o;
-	private String method;
-	
-	public MockRequestWithPayload(String method,String uri,Object o){
-		this.o=o;
-		this.uri=uri;
-		this.method=method;
-	}
-	
-	public MockRequestForObjectPayload serializeWith(Serializer serializer) {
-		return new MockRequestForObjectPayload(method,uri,o,serializer.getClass(),null);
-	}
+    private String uri;
+    private Object o;
+    private String method;
 
-	public MockRequestForObjectPayload serializeWith(Class<? extends Serializer> serializer) {
-		return new MockRequestForObjectPayload(method,uri,o,null,serializer);
-	}
+    public MockRequestWithPayload(String method, String uri, Object o) {
+        this.o = o;
+        this.uri = uri;
+        this.method = method;
+    }
 
-	public MockRequestForObjectPayload serialize() {
-		return new MockRequestForObjectPayload(method,uri,o,null,null);
-	}
+    public MockRequestForObjectPayload serializeWith(Serializer serializer) {
+        return new MockRequestForObjectPayload(method, uri, o,
+                serializer.getClass(), null);
+    }
+
+    public MockRequestForObjectPayload serializeWith(
+            Class<? extends Serializer> serializer) {
+        return new MockRequestForObjectPayload(method, uri, o, null, serializer);
+    }
+
+    public MockRequestForObjectPayload serialize() {
+        return new MockRequestForObjectPayload(method, uri, o, null, null);
+    }
 
 }

@@ -9,18 +9,19 @@ import javax.xml.bind.Marshaller;
 
 import net.gcolin.httpquery.Serializer;
 
-public class JAXBPrettySerializer implements Serializer{
+public class JAXBPrettySerializer implements Serializer {
 
-	@Override
-	public void write(OutputStream outStream, Object obj) throws IOException {
-		JAXBContext context = JAXBContexts.context(obj.getClass());
-		try {
-			Marshaller marshaller = context.createMarshaller();
-			marshaller.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE );
-			marshaller.marshal(obj, outStream);
-		} catch (JAXBException e) {
-			throw new IOException(e);
-		}
-	}
+    @Override
+    public void write(OutputStream outStream, Object obj) throws IOException {
+        JAXBContext context = JAXBContexts.context(obj.getClass());
+        try {
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+                    Boolean.TRUE);
+            marshaller.marshal(obj, outStream);
+        } catch (JAXBException e) {
+            throw new IOException(e);
+        }
+    }
 
 }

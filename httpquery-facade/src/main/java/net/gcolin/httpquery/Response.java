@@ -29,14 +29,22 @@ import java.util.Map.Entry;
 
 public interface Response {
 
-	<T> T as(Class<T> target);
-	String asString();
-	InputStream asStream();
-	byte[] asBytes();
-	String header(String key);
-	Collection<String> headers(String key);
-	Collection<Entry<String,String>> headers();
-	void close();
-	int status();
-	
+    <T> T as(Class<T> target);
+
+    String asString();
+
+    InputStream asStream();
+
+    byte[] asBytes();
+
+    String header(String key);
+
+    Collection<String> headers(String key);
+
+    Collection<Entry<String, String>> headers();
+
+    void close();
+
+    int status();
+
 }

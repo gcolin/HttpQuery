@@ -38,94 +38,95 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 
-public class HttpHandlerImpl implements HttpHandler{
+public class HttpHandlerImpl implements HttpHandler {
 
-	public static final String ERROR_MESSAGE = "cannot send request";
-	
-	@Override
-	public Request get(String uri) {
-		return new RequestImpl(new HttpGet(uri));
-	}
+    public static final String ERROR_MESSAGE = "cannot send request";
 
-	@Override
-	public Request delete(String uri) {
-		return new RequestImpl(new HttpDelete(uri));
-	}
+    @Override
+    public Request get(String uri) {
+        return new RequestImpl(new HttpGet(uri));
+    }
 
-	@Override
-	public RequestWithPayload put(String uri, Object obj) {
-		return new RequestWithPayloadImpl(new HttpPut(uri), obj);
-	}
+    @Override
+    public Request delete(String uri) {
+        return new RequestImpl(new HttpDelete(uri));
+    }
 
-	@Override
-	public Request put(String uri, byte[] data) {
-		HttpPut put=new HttpPut(uri);
-		put.setEntity(new ByteArrayEntity(data));
-		return new RequestImpl(put);
-	}
+    @Override
+    public RequestWithPayload put(String uri, Object obj) {
+        return new RequestWithPayloadImpl(new HttpPut(uri), obj);
+    }
 
-	@Override
-	public Request put(String uri, String str) {
-		HttpPut put=new HttpPut(uri);
-		try {
-			put.setEntity(new StringEntity(str));
-		} catch (UnsupportedEncodingException e) {
-		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
-		}
-		return new RequestImpl(put);
-	}
+    @Override
+    public Request put(String uri, byte[] data) {
+        HttpPut put = new HttpPut(uri);
+        put.setEntity(new ByteArrayEntity(data));
+        return new RequestImpl(put);
+    }
 
-	@Override
-	public Request put(String uri, InputStream inStream) {
-		HttpPut put=new HttpPut(uri);
-		put.setEntity(new InputStreamEntity(inStream,-1));
-		return new RequestImpl(put);
-	}
+    @Override
+    public Request put(String uri, String str) {
+        HttpPut put = new HttpPut(uri);
+        try {
+            put.setEntity(new StringEntity(str));
+        } catch (UnsupportedEncodingException e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    e.getMessage(), e);
+        }
+        return new RequestImpl(put);
+    }
 
-	@Override
-	public RequestWithPayload post(String uri, Object obj) {
-		return new RequestWithPayloadImpl(new HttpPost(uri), obj);
-	}
+    @Override
+    public Request put(String uri, InputStream inStream) {
+        HttpPut put = new HttpPut(uri);
+        put.setEntity(new InputStreamEntity(inStream, -1));
+        return new RequestImpl(put);
+    }
 
-	@Override
-	public Request post(String uri, byte[] data) {
-		HttpPost post=new HttpPost(uri);
-		post.setEntity(new ByteArrayEntity(data));
-		return new RequestImpl(post);
-	}
+    @Override
+    public RequestWithPayload post(String uri, Object obj) {
+        return new RequestWithPayloadImpl(new HttpPost(uri), obj);
+    }
 
-	@Override
-	public Request post(String uri, InputStream inStream) {
-		HttpPost post=new HttpPost(uri);
-		post.setEntity(new InputStreamEntity(inStream,-1));
-		return new RequestImpl(post);
-	}
+    @Override
+    public Request post(String uri, byte[] data) {
+        HttpPost post = new HttpPost(uri);
+        post.setEntity(new ByteArrayEntity(data));
+        return new RequestImpl(post);
+    }
 
-	@Override
-	public Request post(String uri, String str) {
-		HttpPost post=new HttpPost(uri);
-		try {
-			post.setEntity(new StringEntity(str));
-		} catch (UnsupportedEncodingException e) {
-		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
-		}
-		return new RequestImpl(post);
-	}
+    @Override
+    public Request post(String uri, InputStream inStream) {
+        HttpPost post = new HttpPost(uri);
+        post.setEntity(new InputStreamEntity(inStream, -1));
+        return new RequestImpl(post);
+    }
 
-	@Override
-	public Request trace(String uri) {
-		return new RequestImpl(new HttpTrace(uri));
-	}
+    @Override
+    public Request post(String uri, String str) {
+        HttpPost post = new HttpPost(uri);
+        try {
+            post.setEntity(new StringEntity(str));
+        } catch (UnsupportedEncodingException e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    e.getMessage(), e);
+        }
+        return new RequestImpl(post);
+    }
 
-	@Override
-	public Request head(String uri) {
-		return new RequestImpl(new HttpHead(uri));
-	}
+    @Override
+    public Request trace(String uri) {
+        return new RequestImpl(new HttpTrace(uri));
+    }
 
-	@Override
-	public Request options(String uri) {
-		return new RequestImpl(new HttpOptions(uri));
-	}
+    @Override
+    public Request head(String uri) {
+        return new RequestImpl(new HttpHead(uri));
+    }
 
+    @Override
+    public Request options(String uri) {
+        return new RequestImpl(new HttpOptions(uri));
+    }
 
 }

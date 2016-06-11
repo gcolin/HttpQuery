@@ -7,19 +7,20 @@ import net.gcolin.httpquery.examples.util.TomcatServer;
 
 public final class SimpleRequest {
 
-	private SimpleRequest(){}
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-	    Logger log = Logger.getLogger(SimpleRequest.class.getName());
-		
-		TomcatServer.start();
-		
-		log.info(Http.get("http://localhost:8880/index.html").asString());
-		
-		TomcatServer.stop();
-	}
+    private static final Logger LOG = Logger.getLogger(SimpleRequest.class.getName());
+    
+    private SimpleRequest() {
+    }
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        TomcatServer.start();
+
+        LOG.info(Http.get("http://localhost:8880/index.html").asString());
+
+        TomcatServer.stop();
+    }
 
 }

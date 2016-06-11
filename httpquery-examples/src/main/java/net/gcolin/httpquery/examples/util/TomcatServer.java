@@ -69,8 +69,10 @@ public final class TomcatServer {
                             HttpServletResponse resp)
 
                     throws ServletException, IOException {
-                        IOUtils.copy(new FileInputStream(new File(new File(
-                        "src/main/resources/webapp"),req.getPathInfo())), resp.getOutputStream());
+                        IOUtils.copy(new FileInputStream(
+                                new File(new File("src/main/resources/webapp"),
+                                        req.getPathInfo())), resp
+                                .getOutputStream());
                     }
                 });
                 ctx.addServletMapping("/*", "hello");

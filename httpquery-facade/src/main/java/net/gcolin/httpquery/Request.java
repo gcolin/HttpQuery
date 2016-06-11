@@ -27,18 +27,29 @@ import java.io.InputStream;
 
 public interface Request {
 
-	<T> T as(Class<T> target);
-	String asString();
-	InputStream asStream();
-	byte[] asBytes();
-	int send();
-	Response asResponse();
-	Request setContentType(String s);
-	Request setAcceptType(String s);
-	Request header(String key,String value);
-	Request deserializeWith(Deserializer p);
-	Request deserializeWith(Class<? extends Deserializer> p);
-	Request setAuthBasic(String username, String password);
-	
-	void setDelegate(Object o);
+    <T> T as(Class<T> target);
+
+    String asString();
+
+    InputStream asStream();
+
+    byte[] asBytes();
+
+    int send();
+
+    Response asResponse();
+
+    Request setContentType(String s);
+
+    Request setAcceptType(String s);
+
+    Request header(String key, String value);
+
+    Request deserializeWith(Deserializer p);
+
+    Request deserializeWith(Class<? extends Deserializer> p);
+
+    Request setAuthBasic(String username, String password);
+
+    void setDelegate(Object o);
 }

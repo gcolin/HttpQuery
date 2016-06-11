@@ -30,42 +30,43 @@ import java.util.logging.Logger;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.entity.ByteArrayEntity;
 
-public class RequestWithPayloadImpl implements RequestWithPayload{
+public class RequestWithPayloadImpl implements RequestWithPayload {
 
-	private HttpEntityEnclosingRequestBase delegate;
-	private Object obj;
+    private HttpEntityEnclosingRequestBase delegate;
+    private Object obj;
 
-	public RequestWithPayloadImpl(HttpEntityEnclosingRequestBase delegate,
-			Object obj) {
-		this.delegate = delegate;
-		this.obj = obj;
-	}
+    public RequestWithPayloadImpl(HttpEntityEnclosingRequestBase delegate,
+            Object obj) {
+        this.delegate = delegate;
+        this.obj = obj;
+    }
 
-	public Request serializeWith(Serializer s) {
-		if(s!=null){
-			try {
-				ByteArrayOutputStream out=new ByteArrayOutputStream();
-				s.write(out, obj);
-				delegate.setEntity(new ByteArrayEntity(out.toByteArray()));
-				String type = IO.contentType(s);
-				if(type!=null){
-					delegate.addHeader("Content-Type", type);
-				}
-			} catch (IOException e) {
-			    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
-			}
-			
-		}
-		return new RequestImpl(delegate);
-	}
+    public Request serializeWith(Serializer s) {
+        if (s != null) {
+            try {
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                s.write(out, obj);
+                delegate.setEntity(new ByteArrayEntity(out.toByteArray()));
+                String type = IO.contentType(s);
+                if (type != null) {
+                    delegate.addHeader("Content-Type", type);
+                }
+            } catch (IOException e) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                        e.getMessage(), e);
+            }
 
-	public Request serialize() {
-		return serializeWith(IO.serializerAs(obj.getClass()));
-	}
+        }
+        return new RequestImpl(delegate);
+    }
 
-	@Override
-	public Request serializeWith(Class<? extends Serializer> serializer) {
-		return serializeWith(IO.serializer(serializer));
-	}
+    public Request serialize() {
+        return serializeWith(IO.serializerAs(obj.getClass()));
+    }
+
+    @Override
+    public Request serializeWith(Class<? extends Serializer> serializer) {
+        return serializeWith(IO.serializer(serializer));
+    }
 
 }

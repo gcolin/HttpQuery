@@ -27,6 +27,7 @@ import java.net.HttpURLConnection;
 
 public interface ClientDeserializer<T> {
 
-	T call(HttpURLConnection conn) throws IOException;
-	boolean closable();
+    T call(HttpURLConnection conn) throws IOException;
+
+    boolean closable();
 }

@@ -23,9 +23,10 @@
 
 package net.gcolin.httpquery;
 
-
 public interface RequestWithPayload {
-	Request serializeWith(Serializer serializer) ;
-	Request serializeWith(Class<? extends Serializer> serializer) ;
+    Request serializeWith(Serializer serializer);
+
+    Request serializeWith(Class<? extends Serializer> serializer);
+
     Request serialize();
 }

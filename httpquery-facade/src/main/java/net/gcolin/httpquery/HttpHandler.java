@@ -27,17 +27,29 @@ import java.io.InputStream;
 
 public interface HttpHandler {
 
-	Request get(String uri);
-	Request delete(String uri);
-	RequestWithPayload put(String uri,Object obj);
-	Request put(String uri,byte[] data);
-	Request put(String uri,String str);
-	Request put(String uri,InputStream inStream);
-	RequestWithPayload post(String uri,Object obj);
-	Request post(String uri,byte[] data);
-	Request post(String uri,InputStream inStream);
-	Request post(String uri,String str);
-	Request trace(String uri);
-	Request head(String uri);
-	Request options(String uri);
+    Request get(String uri);
+
+    Request delete(String uri);
+
+    RequestWithPayload put(String uri, Object obj);
+
+    Request put(String uri, byte[] data);
+
+    Request put(String uri, String str);
+
+    Request put(String uri, InputStream inStream);
+
+    RequestWithPayload post(String uri, Object obj);
+
+    Request post(String uri, byte[] data);
+
+    Request post(String uri, InputStream inStream);
+
+    Request post(String uri, String str);
+
+    Request trace(String uri);
+
+    Request head(String uri);
+
+    Request options(String uri);
 }

@@ -13,17 +13,17 @@ import net.gcolin.httpquery.Serializer;
 
 @Accept("application/xml")
 @For(Object.class)
-public class JAXBSerializer implements Serializer{
+public class JAXBSerializer implements Serializer {
 
-	@Override
-	public void write(OutputStream outStream, Object obj) throws IOException {
-		JAXBContext context = JAXBContexts.context(obj.getClass());
-		try {
-			Marshaller marshaller = context.createMarshaller();
-			marshaller.marshal(obj, outStream);
-		} catch (JAXBException e) {
-			throw new IOException(e);
-		}
-	}
+    @Override
+    public void write(OutputStream outStream, Object obj) throws IOException {
+        JAXBContext context = JAXBContexts.context(obj.getClass());
+        try {
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.marshal(obj, outStream);
+        } catch (JAXBException e) {
+            throw new IOException(e);
+        }
+    }
 
 }

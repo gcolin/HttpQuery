@@ -33,96 +33,96 @@ import net.gcolin.httpquery.Response;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 
-public class ResponseImpl extends AbstractElement implements Response{
+public class ResponseImpl extends AbstractElement implements Response {
 
-	private HttpResponse response;
-	private Deserializer deserializer;
-	
-	public ResponseImpl(HttpResponse response,Deserializer deserializer){
-		this.response=response;
-		this.deserializer=deserializer;
-	}
-	
-	public <T> T as(Class<T> target) {
-		return callback(HttpClientDeserializers.object(target, deserializer));
-	}
+    private HttpResponse response;
+    private Deserializer deserializer;
 
-	public String asString() {
-		return callback(HttpClientDeserializers.STRING);
-	}
+    public ResponseImpl(HttpResponse response, Deserializer deserializer) {
+        this.response = response;
+        this.deserializer = deserializer;
+    }
 
-	public byte[] asBytes() {
-		return callback(HttpClientDeserializers.BYTE);
-	}
-	
-	public InputStream asStream() {
-		return callback(HttpClientDeserializers.STREAM);
-	}
+    public <T> T as(Class<T> target) {
+        return callback(HttpClientDeserializers.object(target, deserializer));
+    }
 
-	@Override
-	public String header(String key) {
-		return response.getFirstHeader(key).getValue();
-	}
+    public String asString() {
+        return callback(HttpClientDeserializers.STRING);
+    }
 
-	public HttpResponse getResponse() {
-		return response;
-	}
+    public byte[] asBytes() {
+        return callback(HttpClientDeserializers.BYTE);
+    }
 
-	@Override
-	public void close() {
-		close(response.getEntity());
-	}
+    public InputStream asStream() {
+        return callback(HttpClientDeserializers.STREAM);
+    }
 
-	@Override
-	public Collection<String> headers(String key) {
-		Collection<String> list=new ArrayList<String>();
-		for(Header h:response.getHeaders(key)){
-			list.add(h.getValue());
-		}
-		return list;
-	}
+    @Override
+    public String header(String key) {
+        return response.getFirstHeader(key).getValue();
+    }
 
-	@Override
-	public Collection<Entry<String, String>> headers() {
-		Collection<Entry<String, String>> list=new ArrayList<Entry<String, String>>();
-		for(final Header h:response.getAllHeaders()){
-			list.add(new HeaderEntry(h));
-		}
-		return list;
-	}
+    public HttpResponse getResponse() {
+        return response;
+    }
 
-	@Override
-	public int status() {
-		return response.getStatusLine().getStatusCode();
-	}
-	
-	private static final class HeaderEntry implements Entry<String, String>{
-		
-		private final Header header;
-		private String v;
-		
-		public HeaderEntry(Header h){
-			this.header = h;
-			v=h.getValue();
-		}
-		
-		@Override
-		public String setValue(String value) {
-			String old = v;
-			v=value;
-			return old;
-		}
-		
-		@Override
-		public String getValue() {
-			return header.getValue();
-		}
-		
-		@Override
-		public String getKey() {
-			return header.getName();
-		}
-		
-	}
+    @Override
+    public void close() {
+        close(response.getEntity());
+    }
+
+    @Override
+    public Collection<String> headers(String key) {
+        Collection<String> list = new ArrayList<String>();
+        for (Header h : response.getHeaders(key)) {
+            list.add(h.getValue());
+        }
+        return list;
+    }
+
+    @Override
+    public Collection<Entry<String, String>> headers() {
+        Collection<Entry<String, String>> list = new ArrayList<Entry<String, String>>();
+        for (final Header h : response.getAllHeaders()) {
+            list.add(new HeaderEntry(h));
+        }
+        return list;
+    }
+
+    @Override
+    public int status() {
+        return response.getStatusLine().getStatusCode();
+    }
+
+    private static final class HeaderEntry implements Entry<String, String> {
+
+        private final Header header;
+        private String v;
+
+        public HeaderEntry(Header h) {
+            this.header = h;
+            v = h.getValue();
+        }
+
+        @Override
+        public String setValue(String value) {
+            String old = v;
+            v = value;
+            return old;
+        }
+
+        @Override
+        public String getValue() {
+            return header.getValue();
+        }
+
+        @Override
+        public String getKey() {
+            return header.getName();
+        }
+
+    }
 
 }

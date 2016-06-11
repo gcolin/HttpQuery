@@ -32,30 +32,32 @@ import org.apache.http.util.EntityUtils;
 
 public abstract class AbstractElement {
 
-	protected <T> T callback(HttpClientDeserializer<T> c){
-		T out = null;
-		HttpEntity entity = null;
-		try {
-			HttpResponse response = getResponse();
-			entity = response.getEntity();
-			out = c.call(entity,response);
-		} catch (final Exception e) {
-		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,HttpHandlerImpl.ERROR_MESSAGE, e);
-		} finally {
-			if(c.closable()){
-				close(entity);
-			}
-		}
-		return out;
-	}
-	
-	protected abstract HttpResponse getResponse() throws IOException;
-	
-	protected void close(HttpEntity entity) {
-		try {
-			EntityUtils.consume(entity);
-		} catch (final IOException e) {
-		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,HttpHandlerImpl.ERROR_MESSAGE, e);
-		}
-	}
+    protected <T> T callback(HttpClientDeserializer<T> c) {
+        T out = null;
+        HttpEntity entity = null;
+        try {
+            HttpResponse response = getResponse();
+            entity = response.getEntity();
+            out = c.call(entity, response);
+        } catch (final Exception e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    HttpHandlerImpl.ERROR_MESSAGE, e);
+        } finally {
+            if (c.closable()) {
+                close(entity);
+            }
+        }
+        return out;
+    }
+
+    protected abstract HttpResponse getResponse() throws IOException;
+
+    protected void close(HttpEntity entity) {
+        try {
+            EntityUtils.consume(entity);
+        } catch (final IOException e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    HttpHandlerImpl.ERROR_MESSAGE, e);
+        }
+    }
 }

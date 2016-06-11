@@ -25,51 +25,53 @@ package net.gcolin.httpquery.mock;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class Item<U,O> implements Serializable{
+public class Item<U, O> implements Serializable {
 
-	private static final int PRIM = 43;
-	private U u;
-	private O o;
-	
-	public Item(U u,O o){
-		this.o=o;
-		this.u=u;
-	}
-	
-	public U getU() {
-		return u;
-	}
-	public void setU(U u) {
-		this.u = u;
-	}
-	public O getO() {
-		return o;
-	}
-	public void setO(O o) {
-		this.o = o;
-	}
+    private static final int PRIM = 43;
+    private U u;
+    private O o;
 
-	@Override
-	public int hashCode() {
-		return (o.hashCode()+PRIM)*PRIM+u.hashCode();
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if(!(obj instanceof Item))
-		{
-			return false;
-		}
-		Item<?, ?> i=(Item<?, ?>) obj;
-		return equalsO(i) && equalsU(i);
-	}
+    public Item(U u, O o) {
+        this.o = o;
+        this.u = u;
+    }
 
-	private boolean equalsO(Item<?, ?> i) {
-		return (o==null && i.o==null)||(o!=null && o.equals(i.o));
-	}
-	
-	private boolean equalsU(Item<?, ?> i) {
-		return (u==null && i.u==null)||(u!=null && u.equals(i.u));
-	}
-	
+    public U getU() {
+        return u;
+    }
+
+    public void setU(U u) {
+        this.u = u;
+    }
+
+    public O getO() {
+        return o;
+    }
+
+    public void setO(O o) {
+        this.o = o;
+    }
+
+    @Override
+    public int hashCode() {
+        return (o.hashCode() + PRIM) * PRIM + u.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Item)) {
+            return false;
+        }
+        Item<?, ?> i = (Item<?, ?>) obj;
+        return equalsO(i) && equalsU(i);
+    }
+
+    private boolean equalsO(Item<?, ?> i) {
+        return (o == null && i.o == null) || (o != null && o.equals(i.o));
+    }
+
+    private boolean equalsU(Item<?, ?> i) {
+        return (u == null && i.u == null) || (u != null && u.equals(i.u));
+    }
+
 }

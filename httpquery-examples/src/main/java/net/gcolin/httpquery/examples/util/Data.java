@@ -9,25 +9,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Data implements Serializable{
-	
-	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	
-	private List<App> app;
+public class Data implements Serializable {
 
-	public List<App> getApp() {
-		return app;
-	}
+    private static final long serialVersionUID = 1L;
 
-	public void setApp(List<App> app) {
-		this.app = app;
-	}
-	
-	
+    private List<App> app;
+
+    public List<App> getApp() {
+        return app;
+    }
+
+    public void setApp(List<App> app) {
+        this.app = app;
+    }
+
 }

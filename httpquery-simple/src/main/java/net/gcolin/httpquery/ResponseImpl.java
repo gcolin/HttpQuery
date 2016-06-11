@@ -30,100 +30,100 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 
-public class ResponseImpl extends AbstractElement implements Response{
+public class ResponseImpl extends AbstractElement implements Response {
 
-	private HttpURLConnection httpCon;
-	private Deserializer deserializer;
-	
-	public ResponseImpl(HttpURLConnection httpCon,Deserializer deserializer){
-		this.httpCon=httpCon;
-		this.deserializer=deserializer;
-	}
-	
-	public <T> T as(Class<T> target) {
-		return callback(ClientDeserializers.object(target, deserializer));
-	}
+    private HttpURLConnection httpCon;
+    private Deserializer deserializer;
 
-	public String asString() {
-		return callback(ClientDeserializers.STRING);
-	}
+    public ResponseImpl(HttpURLConnection httpCon, Deserializer deserializer) {
+        this.httpCon = httpCon;
+        this.deserializer = deserializer;
+    }
 
-	public byte[] asBytes() {
-		return callback(ClientDeserializers.BYTE);
-	}
-	
-	public InputStream asStream() {
-		return callback(ClientDeserializers.STREAM);
-	}
+    public <T> T as(Class<T> target) {
+        return callback(ClientDeserializers.object(target, deserializer));
+    }
 
-	@Override
-	public String header(String key) {
-		return httpCon.getHeaderField(key);
-	}
+    public String asString() {
+        return callback(ClientDeserializers.STRING);
+    }
 
-	@Override
-	public void close() {
-		httpCon.disconnect();
-	}
+    public byte[] asBytes() {
+        return callback(ClientDeserializers.BYTE);
+    }
 
-	@Override
-	public Collection<String> headers(String key) {
-		Collection<String> list=new ArrayList<String>();
-		for(String s:httpCon.getHeaderField(key).split(";")){
-			list.add(s.trim());
-		}
-		return list;
-	}
+    public InputStream asStream() {
+        return callback(ClientDeserializers.STREAM);
+    }
 
-	@Override
-	public Collection<Entry<String, String>> headers() {
-		Collection<Entry<String, String>> list=new ArrayList<Entry<String, String>>();
-		for(Entry<String,List<String>> h:httpCon.getHeaderFields().entrySet()){
-		    for(String e:h.getValue())
-		    {
-		        list.add(new HeaderEntry(h.getKey(),e));
-		    }
-		}
-		return list;
-	}
+    @Override
+    public String header(String key) {
+        return httpCon.getHeaderField(key);
+    }
 
-	@Override
-	public int status() {
-		try {
+    @Override
+    public void close() {
+        httpCon.disconnect();
+    }
+
+    @Override
+    public Collection<String> headers(String key) {
+        Collection<String> list = new ArrayList<String>();
+        for (String s : httpCon.getHeaderField(key).split(";")) {
+            list.add(s.trim());
+        }
+        return list;
+    }
+
+    @Override
+    public Collection<Entry<String, String>> headers() {
+        Collection<Entry<String, String>> list = new ArrayList<Entry<String, String>>();
+        for (Entry<String, List<String>> h : httpCon.getHeaderFields()
+                .entrySet()) {
+            for (String e : h.getValue()) {
+                list.add(new HeaderEntry(h.getKey(), e));
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public int status() {
+        try {
             return httpCon.getResponseCode();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ResponseException(e);
         }
-	}
-	
-	private static final class HeaderEntry implements Entry<String, String>{
-		
-		private String k;
-		private String v;
-		
-		public HeaderEntry(String k,String v){
-			this.k = k;
-			this.v = v;
-		}
-		
-		@Override
-		public String setValue(String value) {
-			String old = v;
-			v=value;
-			return old;
-		}
-		
-		@Override
-		public String getValue() {
-			return v;
-		}
-		
-		@Override
-		public String getKey() {
-			return k;
-		}
-		
-	}
+    }
+
+    private static final class HeaderEntry implements Entry<String, String> {
+
+        private String k;
+        private String v;
+
+        public HeaderEntry(String k, String v) {
+            this.k = k;
+            this.v = v;
+        }
+
+        @Override
+        public String setValue(String value) {
+            String old = v;
+            v = value;
+            return old;
+        }
+
+        @Override
+        public String getValue() {
+            return v;
+        }
+
+        @Override
+        public String getKey() {
+            return k;
+        }
+
+    }
 
     @Override
     protected HttpURLConnection getResponse() throws IOException {

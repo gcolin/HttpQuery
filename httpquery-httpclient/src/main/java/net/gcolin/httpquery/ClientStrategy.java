@@ -7,22 +7,21 @@ public class ClientStrategy {
 
     private static HttpClient singleton = null;
     
-    public static void createClientPerRequest()
-    {
+    private ClientStrategy() {
+    }
+
+    public static void createClientPerRequest() {
         singleton = null;
     }
-    
-    public static void singleClient()
-    {
+
+    public static void singleClient() {
         singleton = new DefaultHttpClient();
     }
-    
-    public static HttpClient createClient()
-    {
-        if(singleton==null)
-        {
+
+    public static HttpClient createClient() {
+        if (singleton == null) {
             return new DefaultHttpClient();
-        }else{
+        } else {
             return singleton;
         }
     }

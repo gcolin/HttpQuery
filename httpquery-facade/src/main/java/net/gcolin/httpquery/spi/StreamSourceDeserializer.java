@@ -22,7 +22,6 @@
  */
 package net.gcolin.httpquery.spi;
 
-
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,17 +34,17 @@ import net.gcolin.httpquery.For;
 
 @For(StreamSource.class)
 @Accept("application/xml,text/xml,xml,application/x-java-serialized-object+xml")
-public class StreamSourceDeserializer implements Deserializer{
+public class StreamSourceDeserializer implements Deserializer {
 
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T toObject(InputStream inStream, Class<T> target) {
-		try {
-			return (T) new StreamSource(inStream);
-		} catch (Exception e) {
-		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
-		} 
-		return null;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T toObject(InputStream inStream, Class<T> target) {
+        try {
+            return (T) new StreamSource(inStream);
+        } catch (Exception e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    e.getMessage(), e);
+        }
+        return null;
+    }
 }

@@ -68,9 +68,8 @@ public class CookieManager {
         // let's determine the domain from where these cookies are being sent
         String domain = getDomainFromHost(conn.getURL().getHost());
 
-        Map<String, Map<String, String>> domainStore; // this is where we will
-                                                      // store cookies for this
-                                                      // domain
+        // this is where we will store cookies for this domain
+        Map<String, Map<String, String>> domainStore;
 
         // now let's check the store to see if we have an entry for this domain
         if (store.containsKey(domain)) {
@@ -141,9 +140,10 @@ public class CookieManager {
         String path = url.getPath();
 
         Map<String, Map<String, String>> domainStore = store.get(domain);
-        if (domainStore == null)
+        if (domainStore == null) {
             return;
-        StringBuffer cookieStringBuffer = new StringBuffer();
+        }
+        StringBuilder cookieStringBuffer = new StringBuilder();
 
         Iterator<String> cookieNames = domainStore.keySet().iterator();
         while (cookieNames.hasNext()) {
@@ -156,17 +156,17 @@ public class CookieManager {
                 cookieStringBuffer.append(cookieName);
                 cookieStringBuffer.append("=");
                 cookieStringBuffer.append((String) cookie.get(cookieName));
-                if (cookieNames.hasNext())
+                if (cookieNames.hasNext()) {
                     cookieStringBuffer.append(SET_COOKIE_SEPARATOR);
+                }
             }
         }
         try {
             conn.setRequestProperty(COOKIE, cookieStringBuffer.toString());
         } catch (java.lang.IllegalStateException ise) {
-            IOException ioe = new IOException(
+            throw new IOException(
                     "Illegal State! Cookies cannot be set on a URLConnection that is already connected. "
-                            + "Only call setCookies(java.net.URLConnection) AFTER calling java.net.URLConnection.connect().");
-            throw ioe;
+                            + "Only call setCookies(java.net.URLConnection) AFTER calling java.net.URLConnection.connect().",ise);
         }
     }
 
@@ -179,8 +179,9 @@ public class CookieManager {
     }
 
     private boolean isNotExpired(String cookieExpires) {
-        if (cookieExpires == null)
+        if (cookieExpires == null) {
             return true;
+        }
         Date now = new Date();
         try {
             return (now.compareTo(dateFormat.parse(cookieExpires))) <= 0;
@@ -192,17 +193,10 @@ public class CookieManager {
     }
 
     private boolean comparePaths(String cookiePath, String targetPath) {
-        if (cookiePath == null) {
-            return true;
-        } else if (cookiePath.equals("/")) {
-            return true;
-        } else if (targetPath.regionMatches(0, cookiePath, 0,
-                cookiePath.length())) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return cookiePath == null
+                || "/".equals(cookiePath)
+                || targetPath.regionMatches(0, cookiePath, 0,
+                        cookiePath.length());
     }
 
     /**

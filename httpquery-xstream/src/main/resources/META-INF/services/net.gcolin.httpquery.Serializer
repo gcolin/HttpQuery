@@ -1,0 +1,2 @@
+net.gcolin.httpquery.xstream.JsonSerializer
+net.gcolin.httpquery.xstream.XmlSerializer

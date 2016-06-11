@@ -30,135 +30,146 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.util.logging.Logger;
 
+import net.gcolin.httpquery.spi.InputStreamSerializer;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 
 public final class HttpClientDeserializers {
 
-	private HttpClientDeserializers(){}
-	
-	public static final HttpClientDeserializer<String> STRING = new HttpClientDeserializer<String>() {
+    public static final HttpClientDeserializer<String> STRING = new StringHttpClientDeserializer();
 
-		public String call(HttpEntity entity, HttpResponse response)
-				throws IOException {
-		    char[] b = new char[512];
+    public static final HttpClientDeserializer<byte[]> BYTE = new HttpClientDeserializer<byte[]>() {
+
+        @Override
+        public byte[] call(HttpEntity entity, HttpResponse response)
+                throws IOException {
+            byte[] b = new byte[InputStreamSerializer.BUFFER_SIZE];
+            int c = 0;
+            InputStream in = entity.getContent();
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            while ((c = in.read(b)) > 0) {
+                out.write(b, 0, c);
+            }
+            return out.toByteArray();
+        }
+
+        @Override
+        public boolean closable() {
+            return true;
+        }
+    };
+
+    public static final HttpClientDeserializer<Integer> VOID = new HttpClientDeserializer<Integer>() {
+
+        @Override
+        public Integer call(HttpEntity entity, HttpResponse response)
+                throws IOException {
+            return response.getStatusLine().getStatusCode();
+        }
+
+        @Override
+        public boolean closable() {
+            return true;
+        }
+    };
+
+    public static final HttpClientDeserializer<InputStream> STREAM = new HttpClientDeserializer<InputStream>() {
+
+        @Override
+        public InputStream call(HttpEntity entity, HttpResponse response)
+                throws IOException {
+            return entity.getContent();
+        }
+
+        @Override
+        public boolean closable() {
+            return false;
+        }
+    };
+    
+    private HttpClientDeserializers() {
+    }
+
+    public static <T> HttpClientDeserializer<T> object(final Class<T> target,
+            final Deserializer deserializer) {
+        return new ObjectHttpClientDeserializer<T>(target, deserializer);
+    }
+
+    public static HttpClientDeserializer<Response> reponse(
+            final Deserializer deserializer) {
+
+        return new HttpClientDeserializer<Response>() {
+
+            @Override
+            public Response call(HttpEntity entity, HttpResponse response)
+                    throws IOException {
+                return new ResponseImpl(response, deserializer);
+            }
+
+            @Override
+            public boolean closable() {
+                return false;
+            }
+        };
+    }
+    
+    public static final class StringHttpClientDeserializer implements HttpClientDeserializer<String> {
+
+        @Override
+        public String call(HttpEntity entity, HttpResponse response)
+                throws IOException {
+            char[] b = new char[InputStreamSerializer.BUFFER_SIZE];
             int c = 0;
             Reader r = new InputStreamReader(entity.getContent(),
                     IO.getCharset());
             StringWriter s = new StringWriter();
-            while((c=r.read(b))>0)
-            {
-                s.write(b,0,c);
+            while ((c = r.read(b)) > 0) {
+                s.write(b, 0, c);
             }
             return s.toString();
-		}
+        }
 
-		@Override
-		public boolean closable() {
-			return true;
-		}
-	};
+        @Override
+        public boolean closable() {
+            return true;
+        }
+    }
 
-	public static final HttpClientDeserializer<byte[]> BYTE = new HttpClientDeserializer<byte[]>() {
+    public static final class ObjectHttpClientDeserializer<T> implements
+            HttpClientDeserializer<T> {
 
-		public byte[] call(HttpEntity entity, HttpResponse response)
-				throws IOException {
-		    byte[] b = new byte[512];
-		    int c = 0;
-		    InputStream in = entity.getContent();
-		    ByteArrayOutputStream out = new ByteArrayOutputStream();
-		    while((c=in.read(b))>0)
-		    {
-		        out.write(b,0,c);
-		    }
-			return out.toByteArray();
-		}
+        private final Class<T> target;
+        private final Deserializer deserializer;
 
-		@Override
-		public boolean closable() {
-			return true;
-		}
-	};
-	
-	public static final HttpClientDeserializer<Integer> VOID = new HttpClientDeserializer<Integer>() {
+        public ObjectHttpClientDeserializer(Class<T> target,
+                Deserializer deserializer) {
+            this.target = target;
+            this.deserializer = deserializer;
+        }
 
-		public Integer call(HttpEntity entity, HttpResponse response)
-				throws IOException {
-			return response.getStatusLine().getStatusCode();
-		}
+        @Override
+        public T call(HttpEntity entity, HttpResponse response)
+                throws IOException {
+            Deserializer d = deserializer;
+            if (entity != null) {
+                if (d == null) {
+                    d = IO.deserializer(response.getEntity().getContentType()
+                            .getValue(), target);
+                }
+                if (d != null) {
+                    return d.toObject(entity.getContent(), target);
+                } else {
+                    Logger.getLogger(this.getClass().getName()).warning(
+                            "no deserializer found : \n" + entity.getContent());
+                }
+            }
+            return null;
+        }
 
-		@Override
-		public boolean closable() {
-			return true;
-		}
-	};
-
-	public static final HttpClientDeserializer<InputStream> STREAM = new HttpClientDeserializer<InputStream>() {
-
-		public InputStream call(HttpEntity entity, HttpResponse response)
-				throws IOException {
-			return entity.getContent();
-		}
-
-		@Override
-		public boolean closable() {
-			return false;
-		}
-	};
-
-	public static <T> HttpClientDeserializer<T> object(final Class<T> target,
-			final Deserializer deserializer) {
-		return new ObjectHttpClientDeserializer<T>(target,deserializer);
-	}
-
-	public static HttpClientDeserializer<Response> reponse(final Deserializer deserializer) {
-
-		return new HttpClientDeserializer<Response>() {
-
-			public Response call(HttpEntity entity, HttpResponse response)
-					throws IOException {
-				return new ResponseImpl(response, deserializer);
-			}
-
-			@Override
-			public boolean closable() {
-				return false;
-			}
-		};
-	}
-	
-	public static final class ObjectHttpClientDeserializer<T> implements HttpClientDeserializer<T> {
-
-		private final Class<T> target;
-		private final Deserializer deserializer;
-		
-		public ObjectHttpClientDeserializer(Class<T> target,Deserializer deserializer){
-			this.target = target;
-			this.deserializer = deserializer;
-		}
-		
-		public T call(HttpEntity entity, HttpResponse response)
-				throws IOException {
-			Deserializer d = deserializer;
-			if (entity != null) {
-				if (d == null) {
-					d = IO.deserializer(
-					        response.getEntity().getContentType()
-									.getValue(), target);
-				}
-				if (d != null) {
-					return d.toObject(entity.getContent(), target);
-				} else {
-					Logger.getLogger(this.getClass().getName()).warning(
-							"no deserializer found : \n"+entity.getContent());
-				}
-			}
-			return null;
-		}
-
-		@Override
-		public boolean closable() {
-			return true;
-		}
-	};
+        @Override
+        public boolean closable() {
+            return true;
+        }
+    }
 }

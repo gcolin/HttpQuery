@@ -14,19 +14,20 @@ import net.gcolin.httpquery.For;
 
 @Accept("application/xml")
 @For(Object.class)
-public class JAXBDeserializer implements Deserializer{
+public class JAXBDeserializer implements Deserializer {
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     @Override
-	public <T> T toObject(InputStream inStream, Class<T> target) {
-		JAXBContext context = JAXBContexts.context(target);
-		try {
-			Unmarshaller unmarshaller = context.createUnmarshaller();
-			return (T) unmarshaller.unmarshal(inStream);
-		} catch (JAXBException e) {
-			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
-			return null;
-		}
-	}
+    public <T> T toObject(InputStream inStream, Class<T> target) {
+        JAXBContext context = JAXBContexts.context(target);
+        try {
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            return (T) unmarshaller.unmarshal(inStream);
+        } catch (JAXBException e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    e.getMessage(), e);
+            return null;
+        }
+    }
 
 }

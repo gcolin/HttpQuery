@@ -27,45 +27,46 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RequestWithPayloadImpl implements RequestWithPayload{
+public class RequestWithPayloadImpl implements RequestWithPayload {
 
-	private Object obj;
-	private String method;
-	private String uri;
+    private Object obj;
+    private String method;
+    private String uri;
 
-	public RequestWithPayloadImpl(String method,String uri,
-			Object obj) {
-	    this.method = method;
+    public RequestWithPayloadImpl(String method, String uri, Object obj) {
+        this.method = method;
         this.uri = uri;
-		this.obj = obj;
-	}
+        this.obj = obj;
+    }
 
-	public Request serializeWith(Serializer s) {
-		if(s!=null){
-			try {
-				ByteArrayOutputStream out=new ByteArrayOutputStream();
-				s.write(out, obj);
-				RequestImpl r =  new RequestImpl(method, uri).data(out.toByteArray());
-				String type = IO.contentType(s);
-				if(type!=null){
-					r.header("Content-Type", type);
-				}
-				return r;
-			} catch (IOException e) {
-			    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
-			}
-			
-		}
-		throw new IllegalArgumentException("serializer cannot be null");
-	}
+    public Request serializeWith(Serializer s) {
+        if (s != null) {
+            try {
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                s.write(out, obj);
+                RequestImpl r = new RequestImpl(method, uri).data(out
+                        .toByteArray());
+                String type = IO.contentType(s);
+                if (type != null) {
+                    r.header("Content-Type", type);
+                }
+                return r;
+            } catch (IOException e) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                        e.getMessage(), e);
+            }
 
-	public Request serialize() {
-		return serializeWith(IO.serializerAs(obj.getClass()));
-	}
+        }
+        throw new IllegalArgumentException("serializer cannot be null");
+    }
 
-	@Override
-	public Request serializeWith(Class<? extends Serializer> serializer) {
-		return serializeWith(IO.serializer(serializer));
-	}
+    public Request serialize() {
+        return serializeWith(IO.serializerAs(obj.getClass()));
+    }
+
+    @Override
+    public Request serializeWith(Class<? extends Serializer> serializer) {
+        return serializeWith(IO.serializer(serializer));
+    }
 
 }

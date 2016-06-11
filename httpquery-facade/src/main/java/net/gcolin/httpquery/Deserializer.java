@@ -33,12 +33,14 @@ import java.io.InputStream;
  */
 public interface Deserializer {
 
-	/**
-	 * transform the request inputStream into object
-	 * 
-	 * @param inStream : the request inputStream
-	 * @param target : the type of object
-	 * @return the object
-	 */
-	<T> T toObject(InputStream inStream,Class<T> target);
+    /**
+     * transform the request inputStream into object
+     * 
+     * @param inStream
+     *            : the request inputStream
+     * @param target
+     *            : the type of object
+     * @return the object
+     */
+    <T> T toObject(InputStream inStream, Class<T> target);
 }

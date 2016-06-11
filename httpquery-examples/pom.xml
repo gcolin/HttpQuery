@@ -16,7 +16,7 @@
 		</dependency>
 		<dependency>
 			<groupId>net.gcolin.httpquery</groupId>
-			<artifactId>httpquery-jackson</artifactId>
+			<artifactId>httpquery-json</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.gcolin.httpquery</groupId>

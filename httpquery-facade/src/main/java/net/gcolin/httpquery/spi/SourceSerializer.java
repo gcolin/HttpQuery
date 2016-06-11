@@ -22,7 +22,6 @@
  */
 package net.gcolin.httpquery.spi;
 
-
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,21 +40,23 @@ import net.gcolin.httpquery.ContentType;
 import net.gcolin.httpquery.For;
 import net.gcolin.httpquery.Serializer;
 
-@For({DOMSource.class,SAXSource.class,StAXSource.class,StreamSource.class})
+@For({ DOMSource.class, SAXSource.class, StAXSource.class, StreamSource.class })
 @ContentType("application/xml")
-public class SourceSerializer implements Serializer{
+public class SourceSerializer implements Serializer {
 
-	private TransformerFactory tf=TransformerFactory.newInstance();
-	
-	@Override
-	public void write(OutputStream outStream, Object obj) {
-		StreamResult sr = new StreamResult(outStream);
-		try {
-			tf.newTransformer().transform((Source) obj, sr);
-		} catch (TransformerConfigurationException e) {
-		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(), e);
-		} catch (TransformerException e) {
-		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(), e);
-		}
-	}
+    private TransformerFactory tf = TransformerFactory.newInstance();
+
+    @Override
+    public void write(OutputStream outStream, Object obj) {
+        StreamResult sr = new StreamResult(outStream);
+        try {
+            tf.newTransformer().transform((Source) obj, sr);
+        } catch (TransformerConfigurationException e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    e.getMessage(), e);
+        } catch (TransformerException e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    e.getMessage(), e);
+        }
+    }
 }

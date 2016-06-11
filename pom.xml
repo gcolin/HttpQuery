@@ -52,6 +52,11 @@
 				<artifactId>httpquery-facade</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+                        <dependency>
+				<groupId>net.gcolin.httpquery</groupId>
+				<artifactId>httpquery-jackson</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>net.gcolin.httpquery</groupId>
 				<artifactId>httpquery-simple</artifactId>
@@ -74,7 +79,7 @@
 			</dependency>
 			<dependency>
 				<groupId>net.gcolin.httpquery</groupId>
-				<artifactId>httpquery-jackson</artifactId>
+				<artifactId>httpquery-json</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

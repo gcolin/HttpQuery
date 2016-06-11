@@ -29,22 +29,23 @@ import java.util.logging.Logger;
 
 public abstract class AbstractElement {
 
-	protected <T> T callback(ClientDeserializer<T> c){
-		T out = null;
-		HttpURLConnection conn = null;
-		try {
-			conn = getResponse();
-			out = c.call(conn);
-		} catch (final Exception e) {
-		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,HttpHandlerImpl.ERROR_MESSAGE, e);
-		} finally {
-			if(c.closable() && conn != null){
-				conn.disconnect();
-			}
-		}
-		return out;
-	}
-	
-	protected abstract HttpURLConnection getResponse() throws IOException;
-	
+    protected <T> T callback(ClientDeserializer<T> c) {
+        T out = null;
+        HttpURLConnection conn = null;
+        try {
+            conn = getResponse();
+            out = c.call(conn);
+        } catch (final Exception e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    HttpHandlerImpl.ERROR_MESSAGE, e);
+        } finally {
+            if (c.closable() && conn != null) {
+                conn.disconnect();
+            }
+        }
+        return out;
+    }
+
+    protected abstract HttpURLConnection getResponse() throws IOException;
+
 }

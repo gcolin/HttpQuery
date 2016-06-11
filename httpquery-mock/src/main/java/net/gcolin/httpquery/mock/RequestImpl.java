@@ -22,7 +22,6 @@
  */
 package net.gcolin.httpquery.mock;
 
-
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,131 +32,132 @@ import net.gcolin.httpquery.Response;
 
 public class RequestImpl implements Request {
 
-	private Map<Class<? extends Deserializer>,Map<Class<?>,Object>> asMap=new HashMap<Class<? extends Deserializer>,Map<Class<?>,Object>>();
-	private String asString;
-	private InputStream inStream;
-	private byte[] asBytes;
-	private String contentType,acceptType;
-	private Map<String,String> headers=new HashMap<String,String>();
-	private Class<? extends Deserializer> d;
-	private String authBasicPassword;
-	private String authBasicLogin;
-	private Response response;
-	private int status;
-	
-	public Map<Class<? extends Deserializer>,Map<Class<?>,Object>> getAsMap() {
-		return asMap;
-	}
+    private Map<Class<? extends Deserializer>, Map<Class<?>, Object>> asMap = new HashMap<Class<? extends Deserializer>, Map<Class<?>, Object>>();
+    private String asString;
+    private InputStream inStream;
+    private byte[] asBytes;
+    private String contentType, acceptType;
+    private Map<String, String> headers = new HashMap<String, String>();
+    private Class<? extends Deserializer> d;
+    private String authBasicPassword;
+    private String authBasicLogin;
+    private Response response;
+    private int status;
 
-	public String getContentType() {
-		return contentType;
-	}
+    public Map<Class<? extends Deserializer>, Map<Class<?>, Object>> getAsMap() {
+        return asMap;
+    }
 
-	public String getAcceptType() {
-		return acceptType;
-	}
+    public String getContentType() {
+        return contentType;
+    }
 
-	public Map<String, String> getHeaders() {
-		return headers;
-	}
+    public String getAcceptType() {
+        return acceptType;
+    }
 
-	public String getAuthBasicPassword() {
-		return authBasicPassword;
-	}
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
 
-	public String getAuthBasicLogin() {
-		return authBasicLogin;
-	}
+    public String getAuthBasicPassword() {
+        return authBasicPassword;
+    }
 
-	public void setAsString(String asString) {
-		this.asString = asString;
-	}
+    public String getAuthBasicLogin() {
+        return authBasicLogin;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public void setAsString(String asString) {
+        this.asString = asString;
+    }
 
-	public void setInStream(InputStream inStream) {
-		this.inStream = inStream;
-	}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-	public void setAsBytes(byte[] asBytes) {
-		this.asBytes = new byte[asBytes.length];
-		System.arraycopy(asBytes, 0, this.asBytes, 0, asBytes.length);
-	}
+    public void setInStream(InputStream inStream) {
+        this.inStream = inStream;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T as(Class<T> target) {
-		return (T)asMap.get(d).get(target);
-	}
+    public void setAsBytes(byte[] asBytes) {
+        this.asBytes = new byte[asBytes.length];
+        System.arraycopy(asBytes, 0, this.asBytes, 0, asBytes.length);
+    }
 
-	@Override
-	public String asString() {
-		return asString;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T as(Class<T> target) {
+        return (T) asMap.get(d).get(target);
+    }
 
-	@Override
-	public InputStream asStream() {
-		return inStream;
-	}
+    @Override
+    public String asString() {
+        return asString;
+    }
 
-	@Override
-	public byte[] asBytes() {
-		return asBytes;
-	}
+    @Override
+    public InputStream asStream() {
+        return inStream;
+    }
 
-	@Override
-	public Request setContentType(String s) {
-		contentType = s;
-		return this;
-	}
+    @Override
+    public byte[] asBytes() {
+        return asBytes;
+    }
 
-	@Override
-	public Request setAcceptType(String s) {
-		acceptType = s;
-		return this;
-	}
+    @Override
+    public Request setContentType(String s) {
+        contentType = s;
+        return this;
+    }
 
-	@Override
-	public Request header(String key, String value) {
-		headers.put(key, value);
-		return this;
-	}
+    @Override
+    public Request setAcceptType(String s) {
+        acceptType = s;
+        return this;
+    }
 
-	@Override
-	public Request deserializeWith(Deserializer p) {
-		d = p.getClass();
-		return this;
-	}
+    @Override
+    public Request header(String key, String value) {
+        headers.put(key, value);
+        return this;
+    }
 
-	@Override
-	public Request deserializeWith(Class<? extends Deserializer> p) {
-		d = p;
-		return this;
-	}
+    @Override
+    public Request deserializeWith(Deserializer p) {
+        d = p.getClass();
+        return this;
+    }
 
-	@Override
-	public Request setAuthBasic(String username, String password) {
-		authBasicPassword = password;
-		authBasicLogin = username;
-		return this;
-	}
+    @Override
+    public Request deserializeWith(Class<? extends Deserializer> p) {
+        d = p;
+        return this;
+    }
 
-	@Override
-	public Response asResponse() {
-		return response;
-	}
+    @Override
+    public Request setAuthBasic(String username, String password) {
+        authBasicPassword = password;
+        authBasicLogin = username;
+        return this;
+    }
 
-	public void setAsResponse(Response response) {
-		this.response = response;
-	}
+    @Override
+    public Response asResponse() {
+        return response;
+    }
 
-	public int send() {
-		return status;
-	}
+    public void setAsResponse(Response response) {
+        this.response = response;
+    }
 
-	@Override
-	public void setDelegate(Object o) {
-	}
+    public int send() {
+        return status;
+    }
+
+    @Override
+    public void setDelegate(Object o) {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -22,7 +22,6 @@
  */
 package net.gcolin.httpquery.mock;
 
-
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.logging.Level;
@@ -30,43 +29,47 @@ import java.util.logging.Logger;
 
 import net.gcolin.httpquery.Request;
 
-public class MockRequestForBytePayload extends MockRequest{
+public class MockRequestForBytePayload extends MockRequest {
 
-	private byte[] payload;
-	
-	public MockRequestForBytePayload(String method,String uri,byte[] payload) {
-		super(method,uri);
-		this.payload = new byte[payload.length];
-		System.arraycopy(payload, 0, this.payload, 0, payload.length);
-	}
-	
-	@Override
-	protected void add(Request r){
-		try {
-			@SuppressWarnings("unchecked")
-			Map<Item<String, byte[]>, Request>  map = (Map<Item<String, byte[]>, Request>) getter().invoke(MockHttpHandler.getInstance());
-			map.put(new Item<String, byte[]>(getUri(),payload), r);
-		} catch (Exception e) {
-			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,"cannot add request",e);
-		}
-	}
-	
-	@Override
-	protected RequestImpl get(){
-		try {
-			@SuppressWarnings("unchecked")
-			Map<Item<String, byte[]>, Request>  map = (Map<Item<String, byte[]>, Request>) getter().invoke(MockHttpHandler.getInstance());
-			Request r = map.get(new Item<String, byte[]>(getUri(),payload));
-			if(r!=null){
-				return (RequestImpl) r;
-			}
-		} catch (Exception e) {
-			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,"cannot get request",e);
-		}
-		return new RequestImpl();
-	}
-	
-	protected Method getter() throws NoSuchMethodException{
-		return MockHttpHandler.class.getMethod("get"+getMethod()+"sByte");
-	}
+    private byte[] payload;
+
+    public MockRequestForBytePayload(String method, String uri, byte[] payload) {
+        super(method, uri);
+        this.payload = new byte[payload.length];
+        System.arraycopy(payload, 0, this.payload, 0, payload.length);
+    }
+
+    @Override
+    protected void add(Request r) {
+        try {
+            @SuppressWarnings("unchecked")
+            Map<Item<String, byte[]>, Request> map = (Map<Item<String, byte[]>, Request>) getter()
+                    .invoke(MockHttpHandler.getInstance());
+            map.put(new Item<String, byte[]>(getUri(), payload), r);
+        } catch (Exception e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    "cannot add request", e);
+        }
+    }
+
+    @Override
+    protected RequestImpl get() {
+        try {
+            @SuppressWarnings("unchecked")
+            Map<Item<String, byte[]>, Request> map = (Map<Item<String, byte[]>, Request>) getter()
+                    .invoke(MockHttpHandler.getInstance());
+            Request r = map.get(new Item<String, byte[]>(getUri(), payload));
+            if (r != null) {
+                return (RequestImpl) r;
+            }
+        } catch (Exception e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    "cannot get request", e);
+        }
+        return new RequestImpl();
+    }
+
+    protected Method getter() throws NoSuchMethodException {
+        return MockHttpHandler.class.getMethod("get" + getMethod() + "sByte");
+    }
 }

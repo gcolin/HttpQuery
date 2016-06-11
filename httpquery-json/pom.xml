@@ -15,9 +15,9 @@
 			<artifactId>httpquery-facade</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.juikito</groupId>
-			<artifactId>juikito-rs-json</artifactId>
-			<version>0.1</version>
+			<groupId>net.gcolin.rest</groupId>
+			<artifactId>rest-ext-json</artifactId>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

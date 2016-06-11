@@ -26,26 +26,25 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ws.rs.core.MediaType;
-
-import org.juikito.JSON;
+import net.gcolin.rest.ext.json.JSON;
 
 import net.gcolin.httpquery.Accept;
 import net.gcolin.httpquery.Deserializer;
 import net.gcolin.httpquery.For;
 
-@Accept(MediaType.APPLICATION_JSON)
+@Accept("application/xml")
 @For(Object.class)
-public class JsonDeserializer implements Deserializer{
+public class JsonDeserializer implements Deserializer {
 
-	@Override
-	public <T> T toObject(InputStream inStream, Class<T> target) {
-		try {
-			return JSON.read(target, target, inStream);
-		} catch (Exception e) {
-		    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,e.getMessage(),e);
-			return null;
-		} 
-	}
+    @Override
+    public <T> T toObject(InputStream inStream, Class<T> target) {
+        try {
+            return JSON.read(target, target, inStream);
+        } catch (Exception e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE,
+                    e.getMessage(), e);
+            return null;
+        }
+    }
 
 }
