@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.gcolin.httpquery</groupId>
@@ -8,26 +9,26 @@
 	<version>1.1-SNAPSHOT</version>
 	<url>http://gcolin.net/httpquery</url>
 	<description>httpquery parent project</description>
-	
-<!-- 	<parent> -->
-<!-- 	    <groupId>org.sonatype.oss</groupId> -->
-<!-- 	    <artifactId>oss-parent</artifactId> -->
-<!-- 	    <version>7</version> -->
-<!--   	</parent> -->
 
-<!-- 	<scm> -->
-<!-- 		<connection>scm:git:git@github.com:gcolin/HttpQuery.git</connection> -->
-<!-- 		<developerConnection>scm:git:git@github.com:gcolin/HttpQuery.git</developerConnection> -->
-<!-- 		<url>git@github.com:gcolin/HttpQuery.git</url> -->
-<!-- 	</scm> -->
+	<!-- <parent> -->
+	<!-- <groupId>org.sonatype.oss</groupId> -->
+	<!-- <artifactId>oss-parent</artifactId> -->
+	<!-- <version>7</version> -->
+	<!-- </parent> -->
 
-<!-- 	<licenses> -->
-<!-- 		<license> -->
-<!-- 			<name>The Apache Software License, Version 2.0</name> -->
-<!-- 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url> -->
-<!-- 			<distribution>repo</distribution> -->
-<!-- 		</license> -->
-<!-- 	</licenses> -->
+	<!-- <scm> -->
+	<!-- <connection>scm:git:git@github.com:gcolin/HttpQuery.git</connection> -->
+	<!-- <developerConnection>scm:git:git@github.com:gcolin/HttpQuery.git</developerConnection> -->
+	<!-- <url>git@github.com:gcolin/HttpQuery.git</url> -->
+	<!-- </scm> -->
+
+	<!-- <licenses> -->
+	<!-- <license> -->
+	<!-- <name>The Apache Software License, Version 2.0</name> -->
+	<!-- <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url> -->
+	<!-- <distribution>repo</distribution> -->
+	<!-- </license> -->
+	<!-- </licenses> -->
 
 	<modules>
 		<module>httpquery-facade</module>
@@ -42,7 +43,8 @@
 		<junit.version>4.4</junit.version>
 		<httpclient.version>4.2.5</httpclient.version>
 		<commonio.version>2.4</commonio.version>
-		<tomcat.version>8.0.9</tomcat.version>
+		<tomcat.version>8.0.53</tomcat.version>
+		<jackson.version>2.9.7</jackson.version>
 	</properties>
 
 	<dependencyManagement>
@@ -52,7 +54,7 @@
 				<artifactId>httpquery-facade</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-                        <dependency>
+			<dependency>
 				<groupId>net.gcolin.httpquery</groupId>
 				<artifactId>httpquery-jackson</artifactId>
 				<version>${project.version}</version>
@@ -113,6 +115,11 @@
 				<artifactId>tomcat-jasper</artifactId>
 				<version>${tomcat.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -132,42 +139,42 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<version>2.4.2</version>
 			</plugin>
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 				<artifactId>maven-source-plugin</artifactId> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<goals> -->
-<!-- 							<goal>jar</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 				<artifactId>maven-javadoc-plugin</artifactId> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>attach-javadocs</id> -->
-<!-- 						<goals> -->
-<!-- 							<goal>jar</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 				<artifactId>maven-gpg-plugin</artifactId> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<id>sign-artifacts</id> -->
-<!-- 						<phase>verify</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>sign</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-source-plugin</artifactId> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <goals> -->
+			<!-- <goal>jar</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-javadoc-plugin</artifactId> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>attach-javadocs</id> -->
+			<!-- <goals> -->
+			<!-- <goal>jar</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-gpg-plugin</artifactId> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>sign-artifacts</id> -->
+			<!-- <phase>verify</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>sign</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 		</plugins>
 	</build>
 </project>

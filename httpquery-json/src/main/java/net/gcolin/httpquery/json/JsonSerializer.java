@@ -25,22 +25,20 @@ package net.gcolin.httpquery.json;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.ws.rs.core.MediaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.gcolin.rest.ext.json.JSON;
-
-import net.gcolin.httpquery.Accept;
 import net.gcolin.httpquery.For;
 import net.gcolin.httpquery.Serializer;
 
-@Accept(MediaType.APPLICATION_JSON)
 @For(Object.class)
 public class JsonSerializer implements Serializer {
 
+	public static ObjectMapper JACKSON;
+	
     @Override
     public void write(OutputStream outStream, Object obj) throws IOException {
         try {
-            JSON.write(obj, outStream);
+        	JACKSON.writeValue(outStream, obj);
         } catch (Exception e) {
             throw new IOException(e);
         }
