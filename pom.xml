@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.gcolin.httpquery</groupId>
 	<artifactId>httpquery</artifactId>
@@ -18,8 +20,8 @@
 		<connection>scm:git:git@github.com:gcolin/HttpQuery.git</connection>
 		<developerConnection>scm:git:git@github.com:gcolin/HttpQuery.git</developerConnection>
 		<url>git@github.com:gcolin/HttpQuery.git</url>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<licenses>
 		<license>
@@ -33,8 +35,13 @@
 		<module>httpquery-facade</module>
 		<module>httpquery-httpclient</module>
 		<module>httpquery-simple</module>
+		<module>httpquery-xstream</module>
+		<module>httpquery-gson</module>
 		<module>httpquery-mock</module>
-		<module>httpquery-json</module>
+		<module>httpquery-jackson</module>
+		<module>httpquery-jaxb</module>
+		<module>httpquery-xml</module>
+		<module>httpquery-obj</module>
 		<module>httpquery-examples</module>
 	</modules>
 
@@ -44,6 +51,8 @@
 		<commonio.version>2.4</commonio.version>
 		<tomcat.version>8.0.53</tomcat.version>
 		<jackson.version>2.9.7</jackson.version>
+		<gson.version>2.8.5</gson.version>
+		<xstream.version>1.4.10</xstream.version>
 	</properties>
 
 	<dependencyManagement>
@@ -56,6 +65,21 @@
 			<dependency>
 				<groupId>net.gcolin.httpquery</groupId>
 				<artifactId>httpquery-jackson</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.gcolin.httpquery</groupId>
+				<artifactId>httpquery-obj</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.gcolin.httpquery</groupId>
+				<artifactId>httpquery-xml</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.gcolin.httpquery</groupId>
+				<artifactId>httpquery-jaxb</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -118,6 +142,16 @@
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
 				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>${gson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream</artifactId>
+				<version>${xstream.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

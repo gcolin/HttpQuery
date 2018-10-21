@@ -1,0 +1,4 @@
+net.gcolin.httpquery.xml.DOMSourceDeserializer
+net.gcolin.httpquery.xml.SAXSourceDeserializer
+net.gcolin.httpquery.xml.StAXSourceDeserializer
+net.gcolin.httpquery.xml.StreamSourceDeserializer

@@ -9,7 +9,7 @@ import net.gcolin.httpquery.examples.util.App;
 import net.gcolin.httpquery.examples.util.Data;
 import net.gcolin.httpquery.examples.util.SerializationUtil;
 import net.gcolin.httpquery.examples.util.TomcatServer;
-import net.gcolin.httpquery.spi.ObjectDeserializer;
+import net.gcolin.httpquery.obj.ObjectDeserializer;
 
 import org.apache.commons.io.FileUtils;
 

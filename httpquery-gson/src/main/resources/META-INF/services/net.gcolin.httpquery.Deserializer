@@ -1,1 +1,1 @@
-net.gcolin.httpquery.gson.JsonDeserializer
+net.gcolin.httpquery.gson.GsonDeserializer

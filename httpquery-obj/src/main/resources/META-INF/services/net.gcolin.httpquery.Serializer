@@ -1,0 +1,2 @@
+net.gcolin.httpquery.spi.ObjectSerializer
+net.gcolin.httpquery.spi.XMLObjectSerializer
