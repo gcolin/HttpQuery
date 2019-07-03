@@ -40,6 +40,7 @@ public interface Deserializer {
      *            : the request inputStream
      * @param target
      *            : the type of object
+     * @param <T> the type
      * @return the object
      */
     <T> T toObject(InputStream inStream, Class<T> target);
