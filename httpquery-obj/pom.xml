@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>net.gcolin.httpquery</groupId>
 		<artifactId>httpquery</artifactId>
-		<version>1.7-SNAPSHOT</version>
+		<version>1.7</version>
 	</parent>
 	<artifactId>httpquery-obj</artifactId>
 	<packaging>jar</packaging>
