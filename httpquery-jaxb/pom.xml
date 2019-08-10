@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>net.gcolin.httpquery</groupId>
 		<artifactId>httpquery</artifactId>
-		<version>1.8</version>
+		<version>1.9-SNAPSHOT</version>
 	</parent>
 	<artifactId>httpquery-jaxb</artifactId>
 	<packaging>jar</packaging>
