@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.*;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.Lifecycle;
@@ -75,7 +75,7 @@ public final class TomcatServer {
                                 .getOutputStream());
                     }
                 });
-                ctx.addServletMapping("/*", "hello");
+                ctx.addServletMappingDecoded("/*", "hello");
                 server.getServer().addLifecycleListener(
                         new LifecycleListener() {
 
